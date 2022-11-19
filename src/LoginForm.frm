@@ -1,7 +1,6 @@
 VERSION 5.00
 Begin VB.Form LoginForm 
    BorderStyle     =   1  'Fixed Single
-   Caption         =   "Form2"
    ClientHeight    =   4395
    ClientLeft      =   7650
    ClientTop       =   4440

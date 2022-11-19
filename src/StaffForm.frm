@@ -141,11 +141,11 @@ Begin VB.Form StaffForm
       Top             =   0
       Width           =   9375
       Begin VB.CommandButton Command1 
-         Caption         =   "Add"
-         Height          =   285
-         Left            =   7920
+         Caption         =   "Add Enrollee"
+         Height          =   525
+         Left            =   6960
          TabIndex        =   14
-         Top             =   1080
+         Top             =   7200
          Width           =   855
       End
       Begin VB.CommandButton Command5 

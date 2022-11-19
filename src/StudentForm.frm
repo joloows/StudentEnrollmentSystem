@@ -674,10 +674,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
-Private Sub Data1_Validate(Action As Integer, Save As Integer)
-
-End Sub
-
 Private Sub Command1_Click()
     LoginForm.Show
 End Sub
