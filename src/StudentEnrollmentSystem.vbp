@@ -1,10 +1,10 @@
 Type=Exe
-Form=StudentForm.frm
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
+Reference=*\G{00025E01-0000-0000-C000-000000000046}#4.0#0#..\..\..\..\..\program files (x86)\common files\microsoft shared\DAO\Dao350.dll#Microsoft DAO 3.51 Object Library
+Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0; mscomctl.ocx
+Form=StudentForm.frm
 Form=LoginForm.frm
 Form=AdminForm.frm
-Form=RegistrarForm.frm
-Reference=*\G{00025E01-0000-0000-C000-000000000046}#4.0#0#..\..\..\..\..\program files (x86)\common files\microsoft shared\DAO\Dao350.dll#Microsoft DAO 3.51 Object Library
 IconForm="StudentForm"
 Startup="StudentForm"
 HelpFile=""

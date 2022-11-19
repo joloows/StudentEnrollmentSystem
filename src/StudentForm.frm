@@ -2,105 +2,121 @@ VERSION 5.00
 Begin VB.Form StudentForm 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Form1"
-   ClientHeight    =   10485
+   ClientHeight    =   10515
    ClientLeft      =   6810
    ClientTop       =   1410
    ClientWidth     =   9975
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   10485
+   ScaleHeight     =   10515
    ScaleWidth      =   9975
+   Begin VB.CommandButton Command4 
+      Caption         =   "Show Staff Form"
+      Height          =   495
+      Left            =   240
+      TabIndex        =   69
+      Top             =   960
+      Width           =   1335
+   End
+   Begin VB.CommandButton Command3 
+      Caption         =   "Show Staff Form"
+      Height          =   495
+      Left            =   240
+      TabIndex        =   68
+      Top             =   240
+      Width           =   1335
+   End
    Begin VB.CommandButton Command2 
       Caption         =   "Submit"
       Height          =   495
       Left            =   4200
       TabIndex        =   66
-      Top             =   9600
+      Top             =   9720
       Width           =   1695
    End
    Begin VB.TextBox Text28 
       Height          =   285
       Left            =   7440
       TabIndex        =   64
-      Top             =   8880
+      Top             =   9000
       Width           =   1935
    End
    Begin VB.TextBox Text27 
       Height          =   285
       Left            =   600
       TabIndex        =   60
-      Top             =   8880
+      Top             =   9000
       Width           =   2055
    End
    Begin VB.TextBox Text26 
       Height          =   285
       Left            =   2880
       TabIndex        =   59
-      Top             =   8880
+      Top             =   9000
       Width           =   2055
    End
    Begin VB.TextBox Text25 
       Height          =   285
       Left            =   5160
       TabIndex        =   58
-      Top             =   8880
+      Top             =   9000
       Width           =   2055
    End
    Begin VB.TextBox Text24 
       Height          =   285
       Left            =   7440
       TabIndex        =   55
-      Top             =   7680
+      Top             =   7800
       Width           =   1935
    End
    Begin VB.TextBox Text23 
       Height          =   285
       Left            =   7440
       TabIndex        =   53
-      Top             =   6480
+      Top             =   6600
       Width           =   1935
    End
    Begin VB.TextBox Text22 
       Height          =   285
       Left            =   600
       TabIndex        =   49
-      Top             =   7680
+      Top             =   7800
       Width           =   2055
    End
    Begin VB.TextBox Text21 
       Height          =   285
       Left            =   2880
       TabIndex        =   48
-      Top             =   7680
+      Top             =   7800
       Width           =   2055
    End
    Begin VB.TextBox Text20 
       Height          =   285
       Left            =   5160
       TabIndex        =   47
-      Top             =   7680
+      Top             =   7800
       Width           =   2055
    End
    Begin VB.TextBox Text19 
       Height          =   285
       Left            =   600
       TabIndex        =   42
-      Top             =   6480
+      Top             =   6600
       Width           =   2055
    End
    Begin VB.TextBox Text18 
       Height          =   285
       Left            =   2880
       TabIndex        =   41
-      Top             =   6480
+      Top             =   6600
       Width           =   2055
    End
    Begin VB.TextBox Text17 
       Height          =   285
       Left            =   5160
       TabIndex        =   40
-      Top             =   6480
+      Top             =   6600
       Width           =   2055
    End
    Begin VB.TextBox Text16 
@@ -271,7 +287,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   7440
       TabIndex        =   65
-      Top             =   8520
+      Top             =   8640
       Width           =   1200
    End
    Begin VB.Label Label33 
@@ -280,7 +296,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   600
       TabIndex        =   63
-      Top             =   8520
+      Top             =   8640
       Width           =   810
    End
    Begin VB.Label Label32 
@@ -289,7 +305,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   2880
       TabIndex        =   62
-      Top             =   8520
+      Top             =   8640
       Width           =   795
    End
    Begin VB.Label Label31 
@@ -298,7 +314,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   5160
       TabIndex        =   61
-      Top             =   8520
+      Top             =   8640
       Width           =   945
    End
    Begin VB.Label Label30 
@@ -316,7 +332,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   600
       TabIndex        =   57
-      Top             =   8160
+      Top             =   8280
       Width           =   1515
    End
    Begin VB.Label Label29 
@@ -325,7 +341,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   7440
       TabIndex        =   56
-      Top             =   7320
+      Top             =   7440
       Width           =   1200
    End
    Begin VB.Label Label28 
@@ -334,7 +350,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   7440
       TabIndex        =   54
-      Top             =   6120
+      Top             =   6240
       Width           =   1200
    End
    Begin VB.Label Label27 
@@ -343,7 +359,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   600
       TabIndex        =   52
-      Top             =   7320
+      Top             =   7440
       Width           =   810
    End
    Begin VB.Label Label26 
@@ -352,7 +368,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   2880
       TabIndex        =   51
-      Top             =   7320
+      Top             =   7440
       Width           =   795
    End
    Begin VB.Label Label25 
@@ -361,7 +377,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   5160
       TabIndex        =   50
-      Top             =   7320
+      Top             =   7440
       Width           =   945
    End
    Begin VB.Label Label24 
@@ -379,7 +395,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   600
       TabIndex        =   46
-      Top             =   6960
+      Top             =   7080
       Width           =   2010
    End
    Begin VB.Label Label23 
@@ -388,7 +404,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   600
       TabIndex        =   45
-      Top             =   6120
+      Top             =   6240
       Width           =   810
    End
    Begin VB.Label Label22 
@@ -397,7 +413,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   2880
       TabIndex        =   44
-      Top             =   6120
+      Top             =   6240
       Width           =   795
    End
    Begin VB.Label Label21 
@@ -406,7 +422,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   5160
       TabIndex        =   43
-      Top             =   6120
+      Top             =   6240
       Width           =   945
    End
    Begin VB.Label Label20 
@@ -424,7 +440,7 @@ Begin VB.Form StudentForm
       Height          =   195
       Left            =   600
       TabIndex        =   39
-      Top             =   5760
+      Top             =   5880
       Width           =   1290
    End
    Begin VB.Label Label19 
@@ -663,5 +679,13 @@ Private Sub Data1_Validate(Action As Integer, Save As Integer)
 End Sub
 
 Private Sub Command1_Click()
-LoginForm.Show
+    LoginForm.Show
+End Sub
+
+Private Sub Command3_Click()
+    StaffForm.Show
+End Sub
+
+Private Sub Command4_Click()
+    Debug.Print (App.Path)
 End Sub
