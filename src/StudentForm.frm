@@ -11,14 +11,6 @@ Begin VB.Form StudentForm
    MinButton       =   0   'False
    ScaleHeight     =   10515
    ScaleWidth      =   9975
-   Begin VB.CommandButton Command4 
-      Caption         =   "Show Staff Form"
-      Height          =   495
-      Left            =   240
-      TabIndex        =   69
-      Top             =   960
-      Width           =   1335
-   End
    Begin VB.CommandButton Command3 
       Caption         =   "Show Staff Form"
       Height          =   495
@@ -682,6 +674,3 @@ Private Sub Command3_Click()
     StaffForm.Show
 End Sub
 
-Private Sub Command4_Click()
-    Debug.Print (App.Path)
-End Sub
