@@ -569,6 +569,14 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
+Private Sub Command2_Click()
+    CreateAccForm.Show
+End Sub
+
+Private Sub Command5_Click()
+    StudentForm.Show
+End Sub
+
 Private Sub Form_Load()
     EnrolleesFrame.Caption = ""
     UsersFrame.Caption = ""

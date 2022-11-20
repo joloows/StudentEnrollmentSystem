@@ -12,12 +12,12 @@ Begin VB.Form StudentForm
    ScaleHeight     =   10515
    ScaleWidth      =   9975
    Begin VB.CommandButton Command3 
-      Caption         =   "Show Staff Form"
+      Caption         =   " Show Staff Window (Temporary button)"
       Height          =   495
       Left            =   240
       TabIndex        =   68
       Top             =   240
-      Width           =   1335
+      Width           =   1695
    End
    Begin VB.CommandButton Command2 
       Caption         =   "Submit"
