@@ -8,4 +8,6 @@
 *.dca
 *.scc
 *.tmp
+*.accdb
+*.mdb
 <name of built binary, exe, dll or ocx>
