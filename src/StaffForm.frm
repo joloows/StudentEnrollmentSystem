@@ -85,7 +85,7 @@ Begin VB.Form StaffForm
          Top             =   2400
          Width           =   2295
       End
-      Begin VB.Label Label4 
+      Begin VB.Label lblStaffId 
          Alignment       =   2  'Center
          AutoSize        =   -1  'True
          Caption         =   "12345"
@@ -105,7 +105,7 @@ Begin VB.Form StaffForm
          Top             =   240
          Width           =   735
       End
-      Begin VB.Label Label2 
+      Begin VB.Label lblUsername 
          Alignment       =   2  'Center
          Caption         =   "<username>"
          BeginProperty Font 
@@ -131,6 +131,166 @@ Begin VB.Form StaffForm
          TabIndex        =   5
          Top             =   960
          Width           =   1095
+      End
+   End
+   Begin VB.Frame AccountFrame 
+      Caption         =   "AccountFrame"
+      Height          =   7935
+      Left            =   2760
+      TabIndex        =   17
+      Top             =   0
+      Visible         =   0   'False
+      Width           =   9375
+      Begin VB.CommandButton Command8 
+         Caption         =   "Submit"
+         Height          =   255
+         Left            =   720
+         TabIndex        =   48
+         Top             =   5880
+         Width           =   855
+      End
+      Begin VB.TextBox Text6 
+         Height          =   285
+         Left            =   2880
+         TabIndex        =   47
+         Top             =   5280
+         Width           =   2535
+      End
+      Begin VB.TextBox Text5 
+         Height          =   285
+         Left            =   2880
+         TabIndex        =   40
+         Top             =   4680
+         Width           =   2535
+      End
+      Begin VB.TextBox Text4 
+         Height          =   285
+         Left            =   2880
+         TabIndex        =   39
+         Top             =   4080
+         Width           =   2535
+      End
+      Begin VB.CommandButton Command3 
+         Caption         =   "Submit"
+         Height          =   255
+         Left            =   720
+         TabIndex        =   38
+         Top             =   2880
+         Width           =   855
+      End
+      Begin VB.TextBox Text3 
+         Height          =   285
+         Left            =   2400
+         TabIndex        =   36
+         Top             =   2280
+         Width           =   2535
+      End
+      Begin VB.Label Label27 
+         AutoSize        =   -1  'True
+         Caption         =   "Confirm password:"
+         Height          =   195
+         Left            =   720
+         TabIndex        =   46
+         Top             =   5280
+         Width           =   1290
+      End
+      Begin VB.Label Label26 
+         AutoSize        =   -1  'True
+         Caption         =   "New password:"
+         Height          =   195
+         Left            =   720
+         TabIndex        =   45
+         Top             =   4680
+         Width           =   1095
+      End
+      Begin VB.Label Label25 
+         AutoSize        =   -1  'True
+         Caption         =   "Enter current password:"
+         Height          =   195
+         Left            =   720
+         TabIndex        =   44
+         Top             =   4080
+         Width           =   1680
+      End
+      Begin VB.Label lblAccountUsername 
+         Caption         =   "<username>"
+         Height          =   255
+         Left            =   2400
+         TabIndex        =   43
+         Top             =   1800
+         Width           =   2535
+      End
+      Begin VB.Label Label23 
+         AutoSize        =   -1  'True
+         Caption         =   "New username:"
+         Height          =   195
+         Left            =   720
+         TabIndex        =   42
+         Top             =   2280
+         Width           =   1110
+      End
+      Begin VB.Label Label22 
+         AutoSize        =   -1  'True
+         Caption         =   "Current username:"
+         Height          =   195
+         Left            =   720
+         TabIndex        =   41
+         Top             =   1800
+         Width           =   1290
+      End
+      Begin VB.Label Label21 
+         Caption         =   "Change Password"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   600
+         TabIndex        =   37
+         Top             =   3480
+         Width           =   2415
+      End
+      Begin VB.Label Label20 
+         AutoSize        =   -1  'True
+         Caption         =   "Change username"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Left            =   600
+         TabIndex        =   35
+         Top             =   1200
+         Width           =   1890
+      End
+      Begin VB.Label Label9 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         Caption         =   "Manage Account"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   13.5
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   360
+         Left            =   3480
+         TabIndex        =   34
+         Top             =   360
+         Width           =   2400
       End
    End
    Begin VB.Frame EnrolleesFrame 
@@ -402,166 +562,6 @@ Begin VB.Form StaffForm
          Width           =   945
       End
    End
-   Begin VB.Frame AccountFrame 
-      Caption         =   "AccountFrame"
-      Height          =   7935
-      Left            =   2760
-      TabIndex        =   17
-      Top             =   0
-      Visible         =   0   'False
-      Width           =   9375
-      Begin VB.CommandButton Command8 
-         Caption         =   "Submit"
-         Height          =   255
-         Left            =   720
-         TabIndex        =   48
-         Top             =   5880
-         Width           =   855
-      End
-      Begin VB.TextBox Text6 
-         Height          =   285
-         Left            =   2880
-         TabIndex        =   47
-         Top             =   5280
-         Width           =   2535
-      End
-      Begin VB.TextBox Text5 
-         Height          =   285
-         Left            =   2880
-         TabIndex        =   40
-         Top             =   4680
-         Width           =   2535
-      End
-      Begin VB.TextBox Text4 
-         Height          =   285
-         Left            =   2880
-         TabIndex        =   39
-         Top             =   4080
-         Width           =   2535
-      End
-      Begin VB.CommandButton Command3 
-         Caption         =   "Submit"
-         Height          =   255
-         Left            =   720
-         TabIndex        =   38
-         Top             =   2880
-         Width           =   855
-      End
-      Begin VB.TextBox Text3 
-         Height          =   285
-         Left            =   2400
-         TabIndex        =   36
-         Top             =   2280
-         Width           =   2535
-      End
-      Begin VB.Label Label27 
-         AutoSize        =   -1  'True
-         Caption         =   "Confirm password:"
-         Height          =   195
-         Left            =   720
-         TabIndex        =   46
-         Top             =   5280
-         Width           =   1290
-      End
-      Begin VB.Label Label26 
-         AutoSize        =   -1  'True
-         Caption         =   "New password:"
-         Height          =   195
-         Left            =   720
-         TabIndex        =   45
-         Top             =   4680
-         Width           =   1095
-      End
-      Begin VB.Label Label25 
-         AutoSize        =   -1  'True
-         Caption         =   "Enter current password:"
-         Height          =   195
-         Left            =   720
-         TabIndex        =   44
-         Top             =   4080
-         Width           =   1680
-      End
-      Begin VB.Label Label24 
-         Caption         =   "<username>"
-         Height          =   255
-         Left            =   2400
-         TabIndex        =   43
-         Top             =   1800
-         Width           =   2535
-      End
-      Begin VB.Label Label23 
-         AutoSize        =   -1  'True
-         Caption         =   "New username:"
-         Height          =   195
-         Left            =   720
-         TabIndex        =   42
-         Top             =   2280
-         Width           =   1110
-      End
-      Begin VB.Label Label22 
-         AutoSize        =   -1  'True
-         Caption         =   "Current username:"
-         Height          =   195
-         Left            =   720
-         TabIndex        =   41
-         Top             =   1800
-         Width           =   1290
-      End
-      Begin VB.Label Label21 
-         Caption         =   "Change Password"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   600
-         TabIndex        =   37
-         Top             =   3480
-         Width           =   2415
-      End
-      Begin VB.Label Label20 
-         AutoSize        =   -1  'True
-         Caption         =   "Change username"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
-         Left            =   600
-         TabIndex        =   35
-         Top             =   1200
-         Width           =   1890
-      End
-      Begin VB.Label Label9 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         Caption         =   "Manage Account"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   13.5
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   360
-         Left            =   3480
-         TabIndex        =   34
-         Top             =   360
-         Width           =   2400
-      End
-   End
 End
 Attribute VB_Name = "StaffForm"
 Attribute VB_GlobalNameSpace = False
@@ -577,10 +577,16 @@ Private Sub Command5_Click()
     StudentForm.Show
 End Sub
 
+
 Private Sub Form_Load()
     EnrolleesFrame.Caption = ""
     UsersFrame.Caption = ""
     AccountFrame.Caption = ""
+    
+    ' replace placeholder captions
+    lblUsername.Caption = UserModule.CurrentUser.username
+    lblStaffId.Caption = UserModule.CurrentUser.id
+    lblAccountUsername.Caption = lblUsername.Caption
 End Sub
 
 Private Sub EnrolleesBtn_Click()

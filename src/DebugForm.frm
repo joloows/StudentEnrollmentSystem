@@ -9,7 +9,7 @@ Begin VB.Form DebugForm
    ScaleHeight     =   3135
    ScaleWidth      =   4680
    Begin VB.CommandButton Command1 
-      Caption         =   "Create Database"
+      Caption         =   "Initialize Database"
       Height          =   495
       Left            =   480
       TabIndex        =   0
@@ -24,4 +24,11 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
     Call InitDatabase
+End Sub
+
+Private Sub Command2_Click()
+    Dim dbPath As String
+    dbPath = App.Path & "\database.accdb"
+    Set DatabaseModule.db = OpenDatabase(dbPath)
+    Debug.Print (DatabaseModule.db.Name)
 End Sub

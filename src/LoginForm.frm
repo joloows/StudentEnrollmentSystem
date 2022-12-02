@@ -10,7 +10,7 @@ Begin VB.Form LoginForm
    MinButton       =   0   'False
    ScaleHeight     =   4395
    ScaleWidth      =   7980
-   Begin VB.CommandButton Command1 
+   Begin VB.CommandButton loginBtn 
       Caption         =   "Login"
       Height          =   375
       Left            =   3360
@@ -18,7 +18,7 @@ Begin VB.Form LoginForm
       Top             =   3360
       Width           =   1335
    End
-   Begin VB.TextBox Text2 
+   Begin VB.TextBox txtPassword 
       Height          =   375
       IMEMode         =   3  'DISABLE
       Left            =   1560
@@ -27,7 +27,7 @@ Begin VB.Form LoginForm
       Top             =   2640
       Width           =   5895
    End
-   Begin VB.TextBox Text1 
+   Begin VB.TextBox txtUsername 
       Height          =   375
       Left            =   1560
       TabIndex        =   0
@@ -73,3 +73,26 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub loginBtn_Click()
+    Dim username As String
+    Dim password As String
+    username = LoginForm.txtUsername
+    password = LoginForm.txtPassword
+    
+    'check to see if the password and username match
+    If IsNull(username) Or username = "" Then
+        MsgBox "You must enter a username.", vbOKOnly, "Required Data"
+        Me.txtUsername.SetFocus
+        Exit Sub
+    End If
+
+    'validation to check if the user entered the password in the password field
+    If IsNull(password) Or password = "" Then
+        MsgBox "You must enter a password.", vbOKOnly, "Required Data"
+        Me.txtUsername.SetFocus
+        Exit Sub
+    End If
+    
+    Call LoginUser(username, password)
+    
+End Sub
