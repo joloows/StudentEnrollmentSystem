@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form DebugForm 
-   Caption         =   "Form1"
+   Caption         =   "AES Enrollment System"
    ClientHeight    =   3135
    ClientLeft      =   3360
    ClientTop       =   2655
@@ -8,6 +8,7 @@ Begin VB.Form DebugForm
    LinkTopic       =   "Form1"
    ScaleHeight     =   3135
    ScaleWidth      =   4680
+   Visible         =   0   'False
    Begin VB.CommandButton Command1 
       Caption         =   "Initialize Database"
       Height          =   495
@@ -27,8 +28,19 @@ Private Sub Command1_Click()
 End Sub
 
 Private Sub Command2_Click()
-    Dim dbPath As String
-    dbPath = App.Path & "\database.accdb"
-    Set DatabaseModule.db = OpenDatabase(dbPath)
-    Debug.Print (DatabaseModule.db.Name)
+    ' Logout User
+    
+    ' Back to Student Form
+    StudentForm.Show
+    
+    Unload StaffForm
+    
+    With UserModule.CurrentUser
+        .isAuthenticated = False
+        .id = 0
+        .username = ""
+        .password = ""
+        .isAdmin = False
+    End With
+    Debug.Print UserModule.CurrentUser.isAuthenticated
 End Sub

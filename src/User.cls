@@ -13,10 +13,19 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private mIsAuthenticated
 Private mId As Long
 Private mUsername As String
 Private mPassword As String
 Private mIsAdmin As Boolean
+
+Public Property Get isAuthenticated() As Boolean
+    isAuthenticated = mIsAuthenticated
+End Property
+
+Public Property Let isAuthenticated(Value As Boolean)
+    mIsAuthenticated = Value
+End Property
 
 Public Property Get id() As Long
     id = mId

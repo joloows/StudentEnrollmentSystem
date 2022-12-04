@@ -1,7 +1,7 @@
 Attribute VB_Name = "UserModule"
 Public CurrentUser As New User
 
-Public Function LoginUser(username As String, password As String)
+Public Sub LoginUser(username As String, password As String)
     ' Using a QueryDef with parameters to avoid SQL injection
     Dim qdf As QueryDef
     Set qdf = DatabaseModule.db.CreateQueryDef("", "SELECT * FROM staff WHERE username=[_uname] AND password=[_pw]")
@@ -10,7 +10,7 @@ Public Function LoginUser(username As String, password As String)
 
     Set L = qdf.OpenRecordset
 
-    If L.BOF And L.EOF Then ' If account not exist
+    If L.BOF And L.EOF Then ' If account not exist in database
 
         MsgBox "Invalid username or password. Please try again.", vbOKOnly, "Invalid Entry!"
         LoginForm.txtPassword.SetFocus
@@ -19,7 +19,7 @@ Public Function LoginUser(username As String, password As String)
         L.Close
         Set L = Nothing
         
-    Else ' Login Success
+    Else ' If account exist
         With L
             .MoveFirst
             LId = !staff_id
@@ -33,17 +33,38 @@ Public Function LoginUser(username As String, password As String)
         Set L = Nothing
         
         With CurrentUser
+            .isAuthenticated = True
             .id = LId
             .username = LUsername
             .password = LPassword
             .isAdmin = LIsAdmin
         End With
         
+        ' Clear login info from previous
+        LoginForm.txtUsername.Text = ""
+        LoginForm.txtPassword.Text = ""
+            
         ' Show staff form
         StaffForm.Show
-        LoginForm.Hide
-        StudentForm.Hide
+        Unload LoginForm
+        Unload StudentForm
+        Set LoginForm = Nothing
+        Set StudentForm = Nothing
     End If
-End Function
+End Sub
 
+Public Sub LogoutUser()
+        StudentForm.Show
+        Unload StaffForm
+        Set StaffForm = Nothing
+        
+        ' Depopulate CurrentUser properties
+        With CurrentUser
+            .isAuthenticated = False
+            .id = 0
+            .username = ""
+            .password = ""
+            .isAdmin = False
+        End With
+End Sub
 

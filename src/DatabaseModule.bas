@@ -2,6 +2,26 @@ Attribute VB_Name = "DatabaseModule"
 Public db As Database
 Public rs As Recordset
 
+Public Type Enrollee
+    Lname As String
+    Fname As String
+    Mname As String
+    Ex As String
+    Sex As String
+    Age As Integer
+    Birthdate As Date
+    Birthplace As String
+    Mt As String
+    Address As String
+    FatherName As String
+    FNum As String
+    MotherName As String
+    Mnum As String
+    GuardianName As String
+    Gnum As String
+    Submission As Date
+End Type
+
 Public Sub InitDatabase()
     Dim dbPath As String
     dbPath = App.Path & "\database.accdb"
@@ -20,6 +40,7 @@ Public Sub InitDatabase()
         Dim SexField, AddressField As Field
         Dim IsEnrolledField, DateEnrolledField As Field
         Dim FatherNameField, MotherNameField, GuardianNameField As Field
+        Dim FatherNumField, MotherNumField, GuardianNumField As Field
         Dim StaffIdField, UsernameField, PasswordField, IsAdminField, DateCreatedField As Field
         
         ' Create and Connect to the database
@@ -29,37 +50,47 @@ Public Sub InitDatabase()
         Set EnrolleeTable = db.CreateTableDef("enrollee")
         
         ' Creates fields for table enrollee
-        Set EnrolleeIdField = EnrolleeTable.CreateField("enrollee_id", dbLong)
-        EnrolleeIdField.Attributes = dbAutoIncrField
-        Set GradeLevelField = EnrolleeTable.CreateField("grade_level", dbInteger)
-        Set SectionField = EnrolleeTable.CreateField("section", dbText)
-        Set LastNameField = EnrolleeTable.CreateField("last_name", dbText)
-        Set FirstNameField = EnrolleeTable.CreateField("first_name", dbText)
-        Set MiddleNameField = EnrolleeTable.CreateField("middle_name", dbText)
-        Set ExNameField = EnrolleeTable.CreateField("extension_name", dbText)
-        Set SexField = EnrolleeTable.CreateField("sex", dbText)
-        Set AddressField = EnrolleeTable.CreateField("address", dbText)
-        Set IsEnrolledField = EnrolleeTable.CreateField("is_enrolled", dbBoolean)
-        Set DateEnrolledField = EnrolleeTable.CreateField("date_enrolled", dbDate)
-        Set FatherNameField = EnrolleeTable.CreateField("father_name", dbText)
-        Set MotherNameField = EnrolleeTable.CreateField("mother_name", dbText)
-        Set GuardianNameField = EnrolleeTable.CreateField("guardian_name", dbText)
+        With EnrolleeTable
+            Set EnrolleeIdField = .CreateField("enrollee_id", dbLong)
+            EnrolleeIdField.Attributes = dbAutoIncrField
+            Set GradeLevelField = .CreateField("grade_level", dbInteger)
+            Set SectionField = .CreateField("section", dbText)
+            Set LastNameField = .CreateField("last_name", dbText)
+            Set FirstNameField = .CreateField("first_name", dbText)
+            Set MiddleNameField = .CreateField("middle_name", dbText)
+            Set ExNameField = .CreateField("extension_name", dbText)
+            Set SexField = .CreateField("sex", dbText)
+            Set AddressField = .CreateField("address", dbText)
+            Set IsEnrolledField = .CreateField("is_enrolled", dbBoolean)
+            Set DateEnrolledField = .CreateField("date_enrolled", dbDate)
+            Set FatherNameField = .CreateField("father_name", dbText)
+            Set FatherNumField = .CreateField("father_no", dbText)
+            Set MotherNameField = .CreateField("mother_name", dbText)
+            Set MotherNumField = .CreateField("mother_no", dbText)
+            Set GuardianNameField = .CreateField("guardian_name", dbText)
+            Set GuardianNumField = .CreateField("guardian_no", dbText)
+        End With
         
         ' Append fields to table enrollee
-        EnrolleeTable.Fields.Append EnrolleeIdField
-        EnrolleeTable.Fields.Append GradeLevelField
-        EnrolleeTable.Fields.Append SectionField
-        EnrolleeTable.Fields.Append LastNameField
-        EnrolleeTable.Fields.Append FirstNameField
-        EnrolleeTable.Fields.Append MiddleNameField
-        EnrolleeTable.Fields.Append ExNameField
-        EnrolleeTable.Fields.Append SexField
-        EnrolleeTable.Fields.Append AddressField
-        EnrolleeTable.Fields.Append IsEnrolledField
-        EnrolleeTable.Fields.Append DateEnrolledField
-        EnrolleeTable.Fields.Append FatherNameField
-        EnrolleeTable.Fields.Append MotherNameField
-        EnrolleeTable.Fields.Append GuardianNameField
+        With EnrolleeTable.Fields
+            .Append EnrolleeIdField
+            .Append GradeLevelField
+            .Append SectionField
+            .Append LastNameField
+            .Append FirstNameField
+            .Append MiddleNameField
+            .Append ExNameField
+            .Append SexField
+            .Append AddressField
+            .Append IsEnrolledField
+            .Append DateEnrolledField
+            .Append FatherNameField
+            .Append FatherNumField
+            .Append MotherNameField
+            .Append MotherNumField
+            .Append GuardianNameField
+            .Append GuardianNumField
+        End With
         
         ' Append table enrollee to db
         db.TableDefs.Append EnrolleeTable
@@ -68,19 +99,23 @@ Public Sub InitDatabase()
         Set StaffTable = db.CreateTableDef("staff")
         
         ' Create fields for table staff
-        Set StaffIdField = StaffTable.CreateField("staff_id", dbLong)
-        StaffIdField.Attributes = dbAutoIncrField
-        Set UsernameField = StaffTable.CreateField("username", dbText)
-        Set PasswordField = StaffTable.CreateField("password", dbText)
-        Set IsAdminField = StaffTable.CreateField("is_admin", dbBoolean)
-        Set DateCreatedField = StaffTable.CreateField("date_created", dbDate)
+        With StaffTable
+            Set StaffIdField = .CreateField("staff_id", dbLong)
+            StaffIdField.Attributes = dbAutoIncrField
+            Set UsernameField = .CreateField("username", dbText)
+            Set PasswordField = .CreateField("password", dbText)
+            Set IsAdminField = .CreateField("is_admin", dbBoolean)
+            Set DateCreatedField = .CreateField("date_created", dbDate)
+        End With
         
         ' Append fields to table staff
-        StaffTable.Fields.Append StaffIdField
-        StaffTable.Fields.Append UsernameField
-        StaffTable.Fields.Append PasswordField
-        StaffTable.Fields.Append IsAdminField
-        StaffTable.Fields.Append DateCreatedField
+        With StaffTable.Fields
+            .Append StaffIdField
+            .Append UsernameField
+            .Append PasswordField
+            .Append IsAdminField
+            .Append DateCreatedField
+        End With
         
         ' Append table staff to db
         db.TableDefs.Append StaffTable
@@ -97,7 +132,15 @@ Public Sub InitDatabase()
             !date_created = Date
             .Update
         End With
+        rs.Close
         Set rs = Nothing
         Debug.Print "Succesfully created admin user 'jolo'."
     End If
 End Sub
+
+Public Function AddEnrollee(En As Enrollee) As Long
+    Debug.Print TypeName(En)
+End Function
+
+
+

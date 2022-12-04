@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form CreateAccForm 
-   Caption         =   "Form1"
+   Caption         =   "AES Enrollment System"
    ClientHeight    =   4095
    ClientLeft      =   60
    ClientTop       =   405

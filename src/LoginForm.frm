@@ -1,6 +1,7 @@
 VERSION 5.00
 Begin VB.Form LoginForm 
    BorderStyle     =   1  'Fixed Single
+   Caption         =   "AES Enrollment System"
    ClientHeight    =   4395
    ClientLeft      =   7650
    ClientTop       =   4440
@@ -76,8 +77,8 @@ Attribute VB_Exposed = False
 Private Sub loginBtn_Click()
     Dim username As String
     Dim password As String
-    username = LoginForm.txtUsername
-    password = LoginForm.txtPassword
+    username = Me.txtUsername
+    password = Me.txtPassword
     
     'check to see if the password and username match
     If IsNull(username) Or username = "" Then
@@ -85,11 +86,11 @@ Private Sub loginBtn_Click()
         Me.txtUsername.SetFocus
         Exit Sub
     End If
-
+    
     'validation to check if the user entered the password in the password field
     If IsNull(password) Or password = "" Then
         MsgBox "You must enter a password.", vbOKOnly, "Required Data"
-        Me.txtUsername.SetFocus
+        Me.txtPassword.SetFocus
         Exit Sub
     End If
     

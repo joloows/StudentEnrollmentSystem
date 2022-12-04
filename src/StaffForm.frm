@@ -2,6 +2,7 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
 Begin VB.Form StaffForm 
    BorderStyle     =   1  'Fixed Single
+   Caption         =   "AES Enrollment System"
    ClientHeight    =   8025
    ClientLeft      =   5955
    ClientTop       =   2925
@@ -577,15 +578,14 @@ Private Sub Command5_Click()
     StudentForm.Show
 End Sub
 
-
 Private Sub Form_Load()
     EnrolleesFrame.Caption = ""
     UsersFrame.Caption = ""
     AccountFrame.Caption = ""
     
     ' replace placeholder captions
-    lblUsername.Caption = UserModule.CurrentUser.username
-    lblStaffId.Caption = UserModule.CurrentUser.id
+    lblUsername.Caption = CurrentUser.username
+    lblStaffId.Caption = CurrentUser.id
     lblAccountUsername.Caption = lblUsername.Caption
 End Sub
 
@@ -593,6 +593,15 @@ Private Sub EnrolleesBtn_Click()
     EnrolleesFrame.Visible = True
     UsersFrame.Visible = False
     AccountFrame.Visible = False
+End Sub
+
+Private Sub LogoutBtn_Click()
+    
+    x = MsgBox("Are you sure you want to logout?", vbYesNo + vbQuestion, "Logout")
+    If x = 6 Then ' If yes
+        Call LogoutUser
+    End If
+    
 End Sub
 
 Private Sub UsersBtn_Click()
