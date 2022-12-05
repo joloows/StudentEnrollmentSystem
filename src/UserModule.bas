@@ -2,25 +2,25 @@ Attribute VB_Name = "UserModule"
 Public CurrentUser As New User
 
 Public Sub LoginUser(username As String, password As String)
-    ' Using a QueryDef with parameters to avoid SQL injection
+    ' Query user input to database
     Dim qdf As QueryDef
-    Set qdf = DatabaseModule.db.CreateQueryDef("", "SELECT * FROM staff WHERE username=[_uname] AND password=[_pw]")
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE username=[_uname] AND password=[_pw]")
     qdf.Parameters("_uname") = username
     qdf.Parameters("_pw") = password
 
-    Set L = qdf.OpenRecordset
+    Set rs = qdf.OpenRecordset
 
-    If L.BOF And L.EOF Then ' If account not exist in database
+    If rs.BOF And rs.EOF Then ' If account not exist in database
 
         MsgBox "Invalid username or password. Please try again.", vbOKOnly, "Invalid Entry!"
         LoginForm.txtPassword.SetFocus
 
         ' clean up
-        L.Close
-        Set L = Nothing
+        rs.Close
+        Set rs = Nothing
         
     Else ' If account exist
-        With L
+        With rs
             .MoveFirst
             LId = !staff_id
             LUsername = !username
@@ -29,8 +29,8 @@ Public Sub LoginUser(username As String, password As String)
         End With
         
         ' clean up
-        L.Close
-        Set L = Nothing
+        rs.Close
+        Set rs = Nothing
         
         With CurrentUser
             .isAuthenticated = True

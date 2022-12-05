@@ -6,11 +6,27 @@ Begin VB.Form StudentForm
    ClientLeft      =   6810
    ClientTop       =   1410
    ClientWidth     =   9975
+   Icon            =   "StudentForm.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   10515
    ScaleWidth      =   9975
+   Begin VB.PictureBox Picture1 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
+      Height          =   1575
+      Left            =   360
+      Picture         =   "StudentForm.frx":2EAEE
+      ScaleHeight     =   1575
+      ScaleWidth      =   1695
+      TabIndex        =   69
+      Top             =   120
+      Width           =   1695
+   End
    Begin VB.CommandButton btnClear 
       Caption         =   "Clear"
       Height          =   495
@@ -241,7 +257,7 @@ Begin VB.Form StudentForm
       Top             =   2880
       Width           =   2415
    End
-   Begin VB.TextBox txtEx 
+   Begin VB.TextBox txtGrade 
       Height          =   285
       Left            =   8160
       TabIndex        =   5
@@ -254,6 +270,24 @@ Begin VB.Form StudentForm
       TabIndex        =   2
       Top             =   2880
       Width           =   2175
+   End
+   Begin VB.Label Label37 
+      Alignment       =   2  'Center
+      Caption         =   "Kap. M. S. Victa, Kawit, Philippines, 4104"
+      Height          =   195
+      Left            =   2640
+      TabIndex        =   71
+      Top             =   960
+      Width           =   4875
+   End
+   Begin VB.Label Label36 
+      Alignment       =   2  'Center
+      Caption         =   "depedcavite.aguinadoes108016@gmail.com |  (046) 484 7623"
+      Height          =   195
+      Left            =   2640
+      TabIndex        =   70
+      Top             =   720
+      Width           =   4890
    End
    Begin VB.Label Label35 
       AutoSize        =   -1  'True
@@ -543,8 +577,8 @@ Begin VB.Form StudentForm
       Width           =   1140
    End
    Begin VB.Label Label10 
-      AutoSize        =   -1  'True
-      Caption         =   "School Logo, Name, details here "
+      Alignment       =   2  'Center
+      Caption         =   "Aguinaldo Elementary School"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   17.25
@@ -555,10 +589,10 @@ Begin VB.Form StudentForm
          Strikethrough   =   0   'False
       EndProperty
       Height          =   435
-      Left            =   2400
+      Left            =   2640
       TabIndex        =   40
-      Top             =   600
-      Width           =   5355
+      Top             =   240
+      Width           =   4860
    End
    Begin VB.Label Label9 
       AutoSize        =   -1  'True
@@ -625,12 +659,12 @@ Begin VB.Form StudentForm
    End
    Begin VB.Label Label4 
       AutoSize        =   -1  'True
-      Caption         =   "Extension Name:"
+      Caption         =   "Grade Level"
       Height          =   195
       Left            =   8160
       TabIndex        =   33
       Top             =   2520
-      Width           =   1200
+      Width           =   870
    End
    Begin VB.Label Label3 
       AutoSize        =   -1  'True
@@ -667,9 +701,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Private Sub btnClear_Click()
-    Dim En As putangina
-    
-    Debug.Print TypeName(En)
+    Call ClearForm
 End Sub
 
 Private Sub Command1_Click()
@@ -685,42 +717,46 @@ Private Sub Command3_Click()
 End Sub
 
 Private Sub btnSubmitRecord_Click()
-    Dim En As Enrollee
+
+    x = MsgBox("Are you sure the details entered are correct?", vbYesNo + vbExclamation, "Confirm")
     
-    En.Lname = txtLname.Text
-    En.Fname = txtFname.Text
-    En.Mname = txtMname.Text
-    En.Ex = txtEx.Text
-    
-    If optMale Then
-        En.Sex = optMale.Caption
-    ElseIf optFemale Then
-        En.Sex = optFemale.Caption
+    If x = 6 Then
+        Dim En As New Enrollee
+        
+        With En
+            .Lname = txtLname.Text
+            .Fname = txtFname.Text
+            .Mname = txtMname.Text
+            .Grade = txtGrade.Text
+            If optMale Then
+                .Sex = optMale.Caption
+            ElseIf optFemale Then
+                .Sex = optFemale.Caption
+            End If
+            .Age = CInt(txtAge.Text)
+            .Birthdate = CDate(txtBm.Text & "/" & txtBd.Text & "/" & txtBy.Text)
+            .Birthplace = txtBirth.Text
+            .Mt = txtMt.Text
+            .Address = txtHno.Text & ", " & txtSt.Text & ", " & txtBrgy.Text & ", " & txtCity.Text & ", " & txtProv.Text & " " & txtZip.Text
+            .Fathername = txtfFname.Text & " " & txtfMname.Text & " " & txtfLname.Text
+            .Fnum = txtfNum.Text
+            .MotherName = txtmFname.Text & " " & txtmMname.Text & " " & txtmLname.Text
+            .Mnum = txtmNum.Text
+            .GuardianName = txtgFname.Text & " " & txtgMname.Text & " " & txtgLname.Text
+            .Gnum = txtgNum.Text
+            .Submission = Format(Now, "mm/dd/yyyy")
+        End With
+        
+        Call AddEnrollee(En)
+        MsgBox "Submission recorded successfuly.", vbInformation, "Success"
     End If
-    
-    En.Age = CInt(txtAge.Text)
-    En.Birthdate = CDate(txtBm.Text & "/" & txtBd.Text & "/" & txtBy.Text)
-    En.Birthplace = txtBirth.Text
-    En.Mt = txtMt.Text
-    En.Address = txtHno.Text & "," & txtSt.Text & "," & txtBrgy.Text & "," & txtCity.Text & "," & txtProv.Text & " " & txtZip.Text
-    En.FatherName = txtfFname.Text & " " & txtfMname.Text & " " & txtfLname.Text
-    En.FNum = txtfNum.Text
-    En.MotherName = txtmFname.Text & " " & txtmMname.Text & " " & txtmLname.Text
-    En.Mnum = txtmNum.Text
-    En.GuardianName = txtgFname.Text & " " & txtgMname.Text & " " & txtgLname.Text
-    En.Gnum = txtgNum.Text
-    En.Submission = Format(Now, "mm/dd/yyyy")
-    
-    Debug.Print En.Lname
-    Call AddEnrollee(En)
-    
-    
 End Sub
 
 Private Sub ClearForm()
     txtLname.Text = ""
     txtFname.Text = ""
     txtMname.Text = ""
+    txtGrade.Text = ""
     optMale.Value = False
     optFemale.Value = False
     txtAge.Text = ""
@@ -747,6 +783,19 @@ Private Sub ClearForm()
     txtgFname.Text = ""
     txtgMname.Text = ""
     txtgNum.Text = ""
+End Sub
+
+Private Sub Form_load()
+    Picture1.Picture = LoadPicture(App.Path & "\aes-ico.jpg")
+    
+    Picture1.ScaleMode = 3
+    Picture1.AutoRedraw = True
+    Picture1.PaintPicture Picture1.Picture, _
+    0, 0, Picture1.ScaleWidth, Picture1.ScaleHeight, _
+    0, 0, Picture1.Picture.Width / 26.46, _
+    Picture1.Picture.Height / 26.46
+    
+    Picture1.Picture = Picture1.Image
 End Sub
 
 

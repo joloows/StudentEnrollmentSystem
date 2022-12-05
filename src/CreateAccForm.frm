@@ -27,14 +27,18 @@ Begin VB.Form CreateAccForm
    End
    Begin VB.TextBox Text3 
       Height          =   285
+      IMEMode         =   3  'DISABLE
       Left            =   2400
+      PasswordChar    =   "*"
       TabIndex        =   7
       Top             =   2280
       Width           =   2415
    End
    Begin VB.TextBox Text2 
       Height          =   285
+      IMEMode         =   3  'DISABLE
       Left            =   2400
+      PasswordChar    =   "*"
       TabIndex        =   6
       Top             =   1680
       Width           =   2415

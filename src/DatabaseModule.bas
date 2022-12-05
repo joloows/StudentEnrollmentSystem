@@ -2,26 +2,6 @@ Attribute VB_Name = "DatabaseModule"
 Public db As Database
 Public rs As Recordset
 
-Public Type Enrollee
-    Lname As String
-    Fname As String
-    Mname As String
-    Ex As String
-    Sex As String
-    Age As Integer
-    Birthdate As Date
-    Birthplace As String
-    Mt As String
-    Address As String
-    FatherName As String
-    FNum As String
-    MotherName As String
-    Mnum As String
-    GuardianName As String
-    Gnum As String
-    Submission As Date
-End Type
-
 Public Sub InitDatabase()
     Dim dbPath As String
     dbPath = App.Path & "\database.accdb"
@@ -54,14 +34,17 @@ Public Sub InitDatabase()
             Set EnrolleeIdField = .CreateField("enrollee_id", dbLong)
             EnrolleeIdField.Attributes = dbAutoIncrField
             Set GradeLevelField = .CreateField("grade_level", dbInteger)
+            Set IsEnrolledField = .CreateField("is_enrolled", dbBoolean)
             Set SectionField = .CreateField("section", dbText)
             Set LastNameField = .CreateField("last_name", dbText)
             Set FirstNameField = .CreateField("first_name", dbText)
             Set MiddleNameField = .CreateField("middle_name", dbText)
-            Set ExNameField = .CreateField("extension_name", dbText)
             Set SexField = .CreateField("sex", dbText)
+            Set AgeField = .CreateField("age", dbInteger)
+            Set BirthdateField = .CreateField("birthdate", dbDate)
+            Set BirthplaceField = .CreateField("birthplace", dbText)
+            Set MtField = .CreateField("mother_tongue", dbText)
             Set AddressField = .CreateField("address", dbText)
-            Set IsEnrolledField = .CreateField("is_enrolled", dbBoolean)
             Set DateEnrolledField = .CreateField("date_enrolled", dbDate)
             Set FatherNameField = .CreateField("father_name", dbText)
             Set FatherNumField = .CreateField("father_no", dbText)
@@ -75,14 +58,17 @@ Public Sub InitDatabase()
         With EnrolleeTable.Fields
             .Append EnrolleeIdField
             .Append GradeLevelField
+            .Append IsEnrolledField
             .Append SectionField
             .Append LastNameField
             .Append FirstNameField
             .Append MiddleNameField
-            .Append ExNameField
             .Append SexField
+            .Append AgeField
+            .Append BirthdateField
+            .Append BirthplaceField
+            .Append MtField
             .Append AddressField
-            .Append IsEnrolledField
             .Append DateEnrolledField
             .Append FatherNameField
             .Append FatherNumField
@@ -138,9 +124,30 @@ Public Sub InitDatabase()
     End If
 End Sub
 
-Public Function AddEnrollee(En As Enrollee) As Long
-    Debug.Print TypeName(En)
-End Function
-
-
-
+Public Sub AddEnrollee(En As Enrollee)
+    
+    Set rs = db.OpenRecordset("enrollee")
+        With rs
+            .AddNew
+            !last_name = En.Lname
+            !first_name = En.Fname
+            !middle_name = En.Mname
+            !grade_level = En.Grade
+            !Sex = En.Sex
+            !Age = En.Age
+            !Birthdate = En.Birthdate
+            !Birthplace = En.Birthplace
+            !mother_tongue = En.Mt
+            !Address = En.Address
+            !father_name = En.Fathername
+            !father_no = En.Fnum
+            !mother_name = En.MotherName
+            !mother_no = En.Mnum
+            !guardian_name = En.GuardianName
+            !guardian_no = En.Gnum
+            !date_enrolled = En.Submission
+            .Update
+        End With
+        rs.Close
+        Set rs = Nothing
+End Sub
