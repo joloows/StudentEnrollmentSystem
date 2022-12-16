@@ -1,7 +1,9 @@
 Attribute VB_Name = "UserModule"
 Public CurrentUser As New User
 
-Public Sub LoginUser(username As String, password As String)
+Public Function LoginUser(username As String, password As String) As Integer
+    Dim rs As Recordset
+    
     ' Query user input to database
     Dim qdf As QueryDef
     Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE username=[_uname] AND password=[_pw]")
@@ -12,13 +14,13 @@ Public Sub LoginUser(username As String, password As String)
 
     If rs.BOF And rs.EOF Then ' If account not exist in database
 
-        MsgBox "Invalid username or password. Please try again.", vbOKOnly, "Invalid Entry!"
-        LoginForm.txtPassword.SetFocus
-
+        LoginUser = 0
+        
         ' clean up
         rs.Close
         Set rs = Nothing
         
+        Exit Function
     Else ' If account exist
         With rs
             .MoveFirst
@@ -39,25 +41,11 @@ Public Sub LoginUser(username As String, password As String)
             .password = LPassword
             .isAdmin = LIsAdmin
         End With
-        
-        ' Clear login info from previous
-        LoginForm.txtUsername.Text = ""
-        LoginForm.txtPassword.Text = ""
-            
-        ' Show staff form
-        StaffForm.Show
-        Unload LoginForm
-        Unload StudentForm
-        Set LoginForm = Nothing
-        Set StudentForm = Nothing
     End If
-End Sub
+    LoginUser = 1
+End Function
 
 Public Sub LogoutUser()
-        StudentForm.Show
-        Unload StaffForm
-        Set StaffForm = Nothing
-        
         ' Depopulate CurrentUser properties
         With CurrentUser
             .isAuthenticated = False

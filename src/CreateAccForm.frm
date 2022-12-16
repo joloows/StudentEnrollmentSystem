@@ -2,14 +2,13 @@ VERSION 5.00
 Begin VB.Form CreateAccForm 
    Caption         =   "AES Enrollment System"
    ClientHeight    =   4095
-   ClientLeft      =   60
-   ClientTop       =   405
+   ClientLeft      =   8010
+   ClientTop       =   3900
    ClientWidth     =   5415
    LinkTopic       =   "Form1"
    ScaleHeight     =   4095
    ScaleWidth      =   5415
-   StartUpPosition =   3  'Windows Default
-   Begin VB.CommandButton Command1 
+   Begin VB.CommandButton btnCreate 
       Caption         =   "Create"
       Height          =   375
       Left            =   1920
@@ -17,7 +16,7 @@ Begin VB.Form CreateAccForm
       Top             =   3480
       Width           =   1575
    End
-   Begin VB.CheckBox Check1 
+   Begin VB.CheckBox chkboxAdminPerm 
       Caption         =   "Check1"
       Height          =   255
       Left            =   600
@@ -25,7 +24,7 @@ Begin VB.Form CreateAccForm
       Top             =   2880
       Width           =   255
    End
-   Begin VB.TextBox Text3 
+   Begin VB.TextBox txtPassword2 
       Height          =   285
       IMEMode         =   3  'DISABLE
       Left            =   2400
@@ -34,7 +33,7 @@ Begin VB.Form CreateAccForm
       Top             =   2280
       Width           =   2415
    End
-   Begin VB.TextBox Text2 
+   Begin VB.TextBox txtPassword1 
       Height          =   285
       IMEMode         =   3  'DISABLE
       Left            =   2400
@@ -43,7 +42,7 @@ Begin VB.Form CreateAccForm
       Top             =   1680
       Width           =   2415
    End
-   Begin VB.TextBox Text1 
+   Begin VB.TextBox txtUsername 
       Height          =   285
       Left            =   2400
       TabIndex        =   5
@@ -111,3 +110,32 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub btnCreate_Click()
+    Dim username As String
+    Dim password As String
+    Dim adminPerm As Boolean
+    
+    username = txtUsername.Text
+    password1 = txtPassword1.Text
+    password2 = txtPassword2.Text
+    
+    If password1 = password2 Then ' password matches
+        password = password1
+    Else
+        MsgBox "Passwords does not match. Please try again.", vbExclamation, "Error"
+        Exit Sub
+    End If
+    
+    If chkboxAdminPerm.Value Then ' If checked
+        adminPerm = True
+    Else
+        adminPerm = False
+    End If
+    
+    x = CreateUser(username, password, adminPerm)
+    If x = 1 Then
+        MsgBox "Succesfully created user '" & username & "'.", vbInformation, "Success"
+    Else
+        MsgBox "username already exists.", vbCritical, "Error"
+    End If
+End Sub

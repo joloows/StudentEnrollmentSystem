@@ -11,11 +11,13 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+Option Explicit
 
+Private mId As Long
+Private mGrade As Integer
 Private mLname As String
 Private mFname As String
 Private mMname As String
-Private mGrade As Integer
 Private mSex As String
 Private mAge As Integer
 Private mBirthdate As Date
@@ -31,6 +33,10 @@ Private mGnum As String
 Private mSubmission As Date
 
 ' Get
+Public Property Get id() As Long
+    id = mId
+End Property
+
 Public Property Get Lname() As String
     Lname = mLname
 End Property
@@ -100,6 +106,10 @@ Public Property Get Submission() As Date
 End Property
 
 ' Let
+Public Property Let id(Value As Long)
+    mId = Value
+End Property
+
 Public Property Let Lname(Value As String)
     mLname = Value
 End Property

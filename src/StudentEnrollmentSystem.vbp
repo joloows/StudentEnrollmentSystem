@@ -1,6 +1,7 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
 Reference=*\G{00025E01-0000-0000-C000-000000000046}#5.0#0#..\..\..\..\..\Program Files (x86)\Common Files\Microsoft Shared\DAO\dao360.dll#Microsoft DAO 3.6 Object Library
+Reference=*\G{420B2830-E718-11CF-893D-00A0C9054228}#1.0#0#..\..\..\..\..\Windows\SysWOW64\scrrun.dll#Microsoft Scripting Runtime
 Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0; mscomctl.ocx
 Form=StudentForm.frm
 Form=LoginForm.frm
@@ -11,6 +12,7 @@ Module=DatabaseModule; DatabaseModule.bas
 Module=UserModule; UserModule.bas
 Class=User; User.cls
 Class=Enrollee; Enrollee.cls
+Form=GotoForm.frm
 IconForm="StudentForm"
 Startup="Sub Main"
 HelpFile=""

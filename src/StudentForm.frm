@@ -176,7 +176,7 @@ Begin VB.Form StudentForm
       Top             =   3720
       Width           =   1455
    End
-   Begin VB.CommandButton Command1 
+   Begin VB.CommandButton btnLgn 
       Caption         =   "Login"
       Height          =   375
       Left            =   8640
@@ -704,7 +704,7 @@ Private Sub btnClear_Click()
     Call ClearForm
 End Sub
 
-Private Sub Command1_Click()
+Private Sub btnLgn_Click()
     If CurrentUser.isAuthenticated Then
         StaffForm.Show
     Else
@@ -712,14 +712,11 @@ Private Sub Command1_Click()
     End If
 End Sub
 
-Private Sub Command3_Click()
-    StaffForm.Show
-End Sub
-
 Private Sub btnSubmitRecord_Click()
 
     x = MsgBox("Are you sure the details entered are correct?", vbYesNo + vbExclamation, "Confirm")
     
+    ' If confirmed, Add record to database
     If x = 6 Then
         Dim En As New Enrollee
         
@@ -785,7 +782,7 @@ Private Sub ClearForm()
     txtgNum.Text = ""
 End Sub
 
-Private Sub Form_load()
+Private Sub Form_Load()
     Picture1.Picture = LoadPicture(App.Path & "\aes-ico.jpg")
     
     Picture1.ScaleMode = 3
