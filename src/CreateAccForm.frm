@@ -119,23 +119,16 @@ Private Sub btnCreate_Click()
     password1 = txtPassword1.Text
     password2 = txtPassword2.Text
     
-    If password1 = password2 Then ' password matches
-        password = password1
-    Else
-        MsgBox "Passwords does not match. Please try again.", vbExclamation, "Error"
-        Exit Sub
-    End If
-    
-    If chkboxAdminPerm.Value Then ' If checked
+    If chkboxAdminPerm.Value = 1 Then ' If checked
         adminPerm = True
     Else
-        adminPerm = False
+    adminPerm = False
     End If
     
-    x = CreateUser(username, password, adminPerm)
-    If x = 1 Then
-        MsgBox "Succesfully created user '" & username & "'.", vbInformation, "Success"
+    If password1 = password2 Then ' password matches
+        password = password1
+        Call CreateUser(username, password, adminPerm)
     Else
-        MsgBox "username already exists.", vbCritical, "Error"
+        MsgBox "Passwords does not match. Please try again.", vbExclamation, "Error"
     End If
 End Sub

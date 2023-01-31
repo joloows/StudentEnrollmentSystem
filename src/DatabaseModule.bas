@@ -2,7 +2,11 @@ Attribute VB_Name = "DatabaseModule"
 Public db As Database
 Public rs As Recordset
 
+' Initializes the database needed for the application.
+' Creates the database if the database does not exist
+' If the database exists, it just opens the database
 Public Sub InitDatabase()
+Attribute InitDatabase.VB_Description = "Initializes the database needed for the application. Creates the database if the database does not exist. If the database exists, it just opens the database"
     Dim dbPath As String
     dbPath = App.Path & "\database.accdb"
     
@@ -22,7 +26,7 @@ Public Sub InitDatabase()
         Dim FatherNameField, MotherNameField, GuardianNameField As Field
         Dim FatherNumField, MotherNumField, GuardianNumField As Field
         Dim StaffIdField, UsernameField, PasswordField, IsAdminField, DateCreatedField As Field
-        
+
         ' Create and Connect to the database
         Set db = CreateDatabase(dbPath, dbLangGeneral, dbEncrypted)
         
@@ -110,17 +114,22 @@ Public Sub InitDatabase()
         
         ' Create first admin account
         Set rs = db.OpenRecordset("staff")
+        username = "admin"
+        password = "adminpass"
         With rs
             .AddNew
-            !username = "jolo"
-            !password = "admin"
+            !username = username
+            !password = password
             !is_admin = True
             !date_created = Date
             .Update
         End With
         rs.Close
         Set rs = Nothing
-        Debug.Print "Succesfully created admin user 'jolo'."
+        
+        Debug.Print "Succesfully created admin user '" & username & "'."
+        Debug.Print "user: " & username & vbNewLine & "password: " & password
+        
     End If
     
 End Sub
@@ -149,25 +158,22 @@ Public Sub AddEnrollee(En As Enrollee)
             !date_enrolled = En.Submission
             .Update
         End With
-        
         ' Clean up
         rs.Close
         Set rs = Nothing
 End Sub
 
-Public Function CreateUser(username As String, password As String, adminPerm As Boolean) As Integer
+Public Sub CreateUser(username As String, password As String, adminPerm As Boolean)
     ' Query user input to database
     Dim qdf As QueryDef
     Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE username=[_uname]")
     qdf.Parameters("_uname") = username
-
+    Debug.Print qdf.SQL
     Set rs = qdf.OpenRecordset
 
     If rs.BOF And rs.EOF Then ' If account not exist in database
         rs.Close
         Set rs = Nothing
-        
-        ' Append data to staff table
         Set rs = db.OpenRecordset("staff")
             With rs
                 .AddNew
@@ -179,21 +185,21 @@ Public Function CreateUser(username As String, password As String, adminPerm As 
             End With
             rs.Close
             Set rs = Nothing
-            
-            CreateUser = 1
-            Exit Function
+            MsgBox "Succesfully created user '" & username & "'.", vbInformation, "Success"
     Else
-        CreateUser = 0
+        MsgBox "username already exists.", vbCritical, "Error"
     End If
-End Function
+End Sub
 
-Public Function Get_Enrollee(Optional page As Integer = 1, Optional search As String = "") As Collection
+Public Function GetEnrollee(Optional page As Integer = 1, Optional search As String = "") As Collection
     Dim qdf As QueryDef
     Dim query As String
     Dim enrollees As New Collection
     Dim En As Enrollee
     Dim total As Integer
     Dim result As New Collection
+    
+    Debug.Print "Get_Enrollee()"
     
     query = "SELECT * FROM enrollee"
     
@@ -212,21 +218,19 @@ Public Function Get_Enrollee(Optional page As Integer = 1, Optional search As St
         "OR birthdate LIKE '*" & search & "*' " & _
         "OR birthplace LIKE '*" & search & "*' " & _
         "OR date_enrolled LIKE '*" & search & "*' " & _
-        "OR mother_tongue LIKE '*" & search & "*' " & _
         "OR address LIKE '*" & search & "*' " & _
         "OR father_name LIKE '*" & search & "*' " & _
-        "OR father_no LIKE '*" & search & "*' " & _
-        "OR mother_no LIKE '*" & search & "*' " & _
-        "OR guardian_no LIKE '*" & search & "*' " & _
+        "OR mother_name LIKE '*" & search & "*' " & _
         "OR guardian_name LIKE '*" & search & "*' "
     End If
+    Debug.Print query
     
     Set qdf = db.CreateQueryDef("", query)
     Set rs = qdf.OpenRecordset
     
     ' Page
-    start_index = (page - 1) * 23 ' where the rs starts
-    stop_index = start_index ' where the rs ends
+    startIndex = (page - 1) * 23 ' where the rs starts
+    stopIndex = startIndex ' where the rs ends
     
     total = 0
     If rs.RecordCount <> 0 Then
@@ -236,46 +240,110 @@ Public Function Get_Enrollee(Optional page As Integer = 1, Optional search As St
     End If
     
     If page > 1 Then
-        rs.Move start_index
+        rs.Move startIndex
     End If
     
     i = 1
-        While Not rs.EOF And i <= 23
-            Set En = New Enrollee
-            With En
-                .id = rs!enrollee_id
-                .Grade = rs!grade_level
-                .Lname = rs!last_name
-                .Fname = rs!first_name
-                .Mname = rs!middle_name
-                .Sex = rs!Sex
-                .Age = rs!Age
-                .Birthdate = rs!Birthdate
-                .Birthplace = rs!Birthplace
-                .Mt = rs!mother_tongue
-                .Address = rs!Address
-                .Fathername = rs!father_name
-                .Fnum = rs!father_no
-                .MotherName = rs!mother_name
-                .Mnum = rs!mother_no
-                .GuardianName = rs!guardian_name
-                .Gnum = rs!guardian_no
-                .Submission = rs!date_enrolled
-            End With
-            enrollees.Add En
-            i = i + 1
-            stop_index = stop_index + 1
-            rs.MoveNext
-        Wend
-        
+    While Not rs.EOF And i <= 23
+        Set En = New Enrollee
+        With En
+            .id = rs!enrollee_id
+            .Grade = rs!grade_level
+            .Lname = rs!last_name
+            .Fname = rs!first_name
+            .Mname = rs!middle_name
+            .Sex = rs!Sex
+            .Age = rs!Age
+            .Birthdate = rs!Birthdate
+            .Birthplace = rs!Birthplace
+            .Mt = rs!mother_tongue
+            .Address = rs!Address
+            .Fathername = rs!father_name
+            .Fnum = rs!father_no
+            .MotherName = rs!mother_name
+            .Mnum = rs!mother_no
+            .GuardianName = rs!guardian_name
+            .Gnum = rs!guardian_no
+            .Submission = rs!date_enrolled
+        End With
+        enrollees.Add En
+        i = i + 1
+        stopIndex = stopIndex + 1
+        rs.MoveNext
+    Wend
+    
+    pages = CInt(total / 23) ' ceil dividing to get total pages
     With result
         .Add enrollees, "enrollees"
-        .Add total, "record_count"
-        .Add CInt(total / 23) + 1, "pages" ' ceil dividing to get total pages
-        .Add start_index + 1, "start_index"
-        .Add stop_index, "stop_index"
+        .Add total, "recordCount"
+        .Add pages, "pages"
+        .Add startIndex + 1, "startIndex"
+        .Add stopIndex, "stopIndex"
+    End With
+    Debug.Print result.Item("pages")
+    
+    Set GetEnrollee = result
+End Function
+'
+Public Function GetUser(isAdmin As Boolean, Optional page As Integer = 1, Optional search As String = "") As Collection
+    Dim qdf As QueryDef
+    Dim users As New Collection
+    Dim u As User
+    Dim result As New Collection
+    
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE is_admin=[_isadmin]")
+    qdf.Parameters("_isadmin") = isAdmin
+    
+    Set rs = qdf.OpenRecordset
+    
+    If search <> "" Then
+        rs.Filter = "staff_id LIKE '*" & search & "*' " & _
+        "OR username LIKE '*" & search & "*' " & _
+        "OR date_created LIKE '*" & search & "*' "
+    End If
+    
+    ' Page
+    startIndex = (page - 1) * 23 ' where the rs starts
+    stopIndex = startIndex ' where the rs ends
+    
+    total = 0
+    If rs.RecordCount <> 0 Then
+        rs.MoveLast
+        total = rs.RecordCount
+        rs.MoveFirst
+    End If
+    
+    If page > 1 Then
+        rs.Move startIndex
+    End If
+    
+    i = 1
+    While Not rs.EOF And i <= 23
+        Set u = New User
+        With u
+           u.id = rs!staff_id
+           u.username = rs!username
+           u.password = rs!password
+           u.isAdmin = rs!is_admin
+           u.dateCreated = rs!date_created
+        End With
+        users.Add u
+        i = i + 1
+        stopIndex = stopIndex + 1
+        rs.MoveNext
+    Wend
+    
+    pages = CInt(total / 23) + 1 ' ceil dividing to get total pages
+    With result
+        .Add users, "users"
+        .Add total, "recordCount"
+        .Add pages, "pages"
+        .Add startIndex + 1, "startIndex"
+        .Add stopIndex, "stopIndex"
     End With
     
-    Set Get_Enrollee = result
+    rs.Close
+    Set rs = Nothing
+    
+    Set GetUser = result
 End Function
-

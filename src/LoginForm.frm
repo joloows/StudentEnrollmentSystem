@@ -116,27 +116,23 @@ Private Sub loginBtn_Click()
     
     'validation to check if the user entered the username in the username field
     If IsNull(username) Or username = "" Then
-        MsgBox "You must enter a username.", vbExclamation + vbOKOnly, "Required Data"
-        txtUsername.SetFocus
+        MsgBox "You must enter a username.", vbOKOnly, "Required Data"
+        Me.txtUsername.SetFocus
         Exit Sub
     End If
     
     'validation to check if the user entered the password in the password field
     If IsNull(password) Or password = "" Then
-        MsgBox "You must enter a password.", vbExclamation + vbOKOnly, "Required Data"
-        txtPassword.SetFocus
+        MsgBox "You must enter a password.", vbOKOnly, "Required Data"
+        Me.txtPassword.SetFocus
         Exit Sub
     End If
     
-    x = LoginUser(username, password)
-    If x = 1 Then ' If successful login
-        ' Show staff form
-        StaffForm.Show
-        Unload LoginForm
-    End If
+    Call LoginUser(username, password)
+    
 End Sub
 
-Private Sub Form_Load()
+Private Sub Form_load()
     Picture1.Picture = LoadPicture(App.Path & "\aes-ico.jpg")
     
     Picture1.ScaleMode = 3

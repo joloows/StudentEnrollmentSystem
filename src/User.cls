@@ -18,6 +18,7 @@ Private mId As Long
 Private mUsername As String
 Private mPassword As String
 Private mIsAdmin As Boolean
+Private mDateCreated As Date
 
 Public Property Get isAuthenticated() As Boolean
     isAuthenticated = mIsAuthenticated
@@ -59,4 +60,11 @@ Public Property Let isAdmin(Value As Boolean)
     mIsAdmin = Value
 End Property
     
+Public Property Get dateCreated() As Date
+    dateCreated = mDateCreated
+End Property
+
+Public Property Let dateCreated(Value As Date)
+    mDateCreated = Value
+End Property
 

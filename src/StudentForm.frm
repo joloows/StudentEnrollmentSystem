@@ -12,6 +12,14 @@ Begin VB.Form StudentForm
    MinButton       =   0   'False
    ScaleHeight     =   10515
    ScaleWidth      =   9975
+   Begin VB.CommandButton Command1 
+      Caption         =   "Command1"
+      Height          =   375
+      Left            =   8640
+      TabIndex        =   72
+      Top             =   1080
+      Width           =   975
+   End
    Begin VB.PictureBox Picture1 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
@@ -716,7 +724,7 @@ Private Sub btnSubmitRecord_Click()
 
     x = MsgBox("Are you sure the details entered are correct?", vbYesNo + vbExclamation, "Confirm")
     
-    ' If confirmed, Add record to database
+    ' If yes, Add record to database
     If x = 6 Then
         Dim En As New Enrollee
         
@@ -782,6 +790,10 @@ Private Sub ClearForm()
     txtgNum.Text = ""
 End Sub
 
+Private Sub Command1_Click()
+    StaffForm.Show
+End Sub
+
 Private Sub Form_Load()
     Picture1.Picture = LoadPicture(App.Path & "\aes-ico.jpg")
     
@@ -793,6 +805,38 @@ Private Sub Form_Load()
     Picture1.Picture.Height / 26.46
     
     Picture1.Picture = Picture1.Image
+    
+    ' Temporary autofill student form
+    txtLname.Text = "Antonio"
+    txtFname.Text = "Angelo"
+    txtMname.Text = "Bueneventura"
+    txtGrade.Text = "5"
+    optMale.Value = True
+    optFemale.Value = False
+    txtAge.Text = "10"
+    txtBm.Text = "06"
+    txtBd.Text = "30"
+    txtBy.Text = "2012"
+    txtBirth.Text = "Cavite City"
+    txtMt.Text = "Filipino"
+    txtHno.Text = "101"
+    txtSt.Text = "Maharlika St."
+    txtBrgy.Text = "Poblacion"
+    txtCity.Text = "Kawit"
+    txtProv.Text = "Marulas"
+    txtZip.Text = "1031"
+    txtfLname.Text = "Antonio"
+    txtfFname.Text = "Denzel"
+    txtfMname.Text = "Velcuz"
+    txtfNum.Text = "09222222222"
+    txtmLname.Text = "Bueneventura"
+    txtmFname.Text = "Stephanie"
+    txtmMname.Text = "Villuaneva"
+    txtmNum.Text = "09333333333"
+    txtgLname.Text = "Denzel"
+    txtgFname.Text = "Antonio"
+    txtgMname.Text = "Velcus"
+    txtgNum.Text = "09222222222"
 End Sub
 
 

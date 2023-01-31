@@ -55,10 +55,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Private Sub btnGo_Click()
-    If CInt(txtPage.Text) > StaffForm.total_page Or CInt(txtPage.Text) < 1 Then
+    If CInt(txtPage.Text) > StaffForm.eTotalPage Or CInt(txtPage.Text) < 1 Then
         MsgBox "Page input either exceeds total pages or input is less than 1.", vbCritical, "Invalid Page"
     Else
-        StaffForm.current_page = CInt(txtPage.Text)
+        StaffForm.eCurrentPage = CInt(txtPage.Text)
         Unload Me
     End If
 End Sub

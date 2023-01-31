@@ -1,7 +1,7 @@
 Attribute VB_Name = "UserModule"
 Public CurrentUser As New User
 
-Public Function LoginUser(username As String, password As String) As Integer
+Public Sub LoginUser(username As String, password As String)
     Dim rs As Recordset
     
     ' Query user input to database
@@ -14,13 +14,13 @@ Public Function LoginUser(username As String, password As String) As Integer
 
     If rs.BOF And rs.EOF Then ' If account not exist in database
 
-        LoginUser = 0
-        
+        MsgBox "Invalid username or password. Please try again.", vbOKOnly, "Invalid Entry!"
+        LoginForm.txtPassword.SetFocus
+
         ' clean up
         rs.Close
         Set rs = Nothing
         
-        Exit Function
     Else ' If account exist
         With rs
             .MoveFirst
@@ -36,20 +36,32 @@ Public Function LoginUser(username As String, password As String) As Integer
         
         With CurrentUser
             .isAuthenticated = True
-            .id = LId
+            .Id = LId
             .username = LUsername
             .password = LPassword
             .isAdmin = LIsAdmin
         End With
+        
+        ' Clear login info from previous
+        LoginForm.txtUsername.Text = ""
+        LoginForm.txtPassword.Text = ""
+            
+        ' Show staff form
+        StaffForm.Show
+        Unload LoginForm
+        Unload StudentForm
+
     End If
-    LoginUser = 1
-End Function
+End Sub
 
 Public Sub LogoutUser()
+        StudentForm.Show
+        Unload StaffForm
+        
         ' Depopulate CurrentUser properties
         With CurrentUser
             .isAuthenticated = False
-            .id = 0
+            .Id = 0
             .username = ""
             .password = ""
             .isAdmin = False
