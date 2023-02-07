@@ -3,9 +3,9 @@ Public CurrentUser As New User
 
 Public Sub LoginUser(username As String, password As String)
     Dim rs As Recordset
+    Dim qdf As QueryDef
     
     ' Query user input to database
-    Dim qdf As QueryDef
     Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE username=[_uname] AND password=[_pw]")
     qdf.Parameters("_uname") = username
     qdf.Parameters("_pw") = password
@@ -36,7 +36,7 @@ Public Sub LoginUser(username As String, password As String)
         
         With CurrentUser
             .isAuthenticated = True
-            .Id = LId
+            .id = LId
             .username = LUsername
             .password = LPassword
             .isAdmin = LIsAdmin
@@ -47,9 +47,9 @@ Public Sub LoginUser(username As String, password As String)
         LoginForm.txtPassword.Text = ""
             
         ' Show staff form
-        StaffForm.Show
         Unload LoginForm
         Unload StudentForm
+        StaffForm.Show
 
     End If
 End Sub
@@ -61,7 +61,7 @@ Public Sub LogoutUser()
         ' Depopulate CurrentUser properties
         With CurrentUser
             .isAuthenticated = False
-            .Id = 0
+            .id = 0
             .username = ""
             .password = ""
             .isAdmin = False

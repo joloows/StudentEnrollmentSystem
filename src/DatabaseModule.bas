@@ -2,7 +2,28 @@ Attribute VB_Name = "DatabaseModule"
 Public db As Database
 Public rs As Recordset
 
-' Initializes the database needed for the application.
+' Jolo po 'to :)
+' We use DAO to communicate with the database. When searching on google,
+' make sure the code you're reading uses 'DAO' instead of 'ADODB'.
+' i.e. search "VB6 how to delete a record from the database with DAO"
+' I recommend po na i-search nyo po muna bago po kayo magtanong sakin
+' kasi i-sesearch ko din po yan pag nagtanong po kayo sa akin kung paano
+' gawin si ganto -- ganyan sa VB6 haha
+
+' But if may gusto po kayo ipa-explain sakin sa code na gawa ko, feel free
+' po na magtanong sa akin. Also recommend ko po na buksan nyo sa ibang
+' text editor yung mga file, masakit sa mata pag sa VB6 kayo magrereview ng code.
+' (for example: if my vscode kayo, doon nyo sya buksan. Or kahit notepad++ lang)
+' If mag wriwrite po kayo ng code, sa VB6 po kayo gagawa.
+
+' Below po is yung mga functionality na kulang pa po natin.
+' TODO: DeleteUser() - Deletes a user from the database
+' TODO: UpdateUser() - Update user info from the database. Account section in StaffForm will also use this.
+' TODO: DeleteEnrollee() - Deletes an enrollee from the database
+' TODO: UpdateEnrollee() - Updates info of an enrollee from the database
+' TODO: tuition computation - Jolo na po gagawa nento.
+
+' InitDatabase() Initializes the database needed for the application.
 ' Creates the database if the database does not exist
 ' If the database exists, it just opens the database
 Public Sub InitDatabase()
@@ -43,6 +64,7 @@ Attribute InitDatabase.VB_Description = "Initializes the database needed for the
             Set LastNameField = .CreateField("last_name", dbText)
             Set FirstNameField = .CreateField("first_name", dbText)
             Set MiddleNameField = .CreateField("middle_name", dbText)
+            Set TuitionField = .CreateField("tuition", dbCurrency)
             Set SexField = .CreateField("sex", dbText)
             Set AgeField = .CreateField("age", dbInteger)
             Set BirthdateField = .CreateField("birthdate", dbDate)
@@ -135,32 +157,35 @@ Attribute InitDatabase.VB_Description = "Initializes the database needed for the
 End Sub
 
 Public Sub AddEnrollee(En As Enrollee)
+    
     Set rs = db.OpenRecordset("enrollee")
-        ' Populate recordset
-        With rs
-            .AddNew
-            !last_name = En.Lname
-            !first_name = En.Fname
-            !middle_name = En.Mname
-            !grade_level = En.Grade
-            !Sex = En.Sex
-            !Age = En.Age
-            !Birthdate = En.Birthdate
-            !Birthplace = En.Birthplace
-            !mother_tongue = En.Mt
-            !Address = En.Address
-            !father_name = En.Fathername
-            !father_no = En.Fnum
-            !mother_name = En.MotherName
-            !mother_no = En.Mnum
-            !guardian_name = En.GuardianName
-            !guardian_no = En.Gnum
-            !date_enrolled = En.Submission
-            .Update
-        End With
-        ' Clean up
-        rs.Close
-        Set rs = Nothing
+    ' Populate recordset with the Enrollee object "En"
+    ' Checkout Enrollee.cls
+    With rs
+        .AddNew
+        !last_name = En.Lname
+        !first_name = En.Fname
+        !middle_name = En.Mname
+        !Tuition = En.Tuition
+        !grade_level = En.Grade
+        !Sex = En.Sex
+        !Age = En.Age
+        !Birthdate = En.Birthdate
+        !Birthplace = En.Birthplace
+        !mother_tongue = En.Mt
+        !address = En.address
+        !father_name = En.fatherName
+        !father_no = En.Fnum
+        !mother_name = En.motherName
+        !mother_no = En.Mnum
+        !guardian_name = En.guardianName
+        !guardian_no = En.Gnum
+        !date_enrolled = En.Submission
+        .Update
+    End With
+    ' Clean up
+    rs.Close
+    Set rs = Nothing
 End Sub
 
 Public Sub CreateUser(username As String, password As String, adminPerm As Boolean)
@@ -168,7 +193,7 @@ Public Sub CreateUser(username As String, password As String, adminPerm As Boole
     Dim qdf As QueryDef
     Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE username=[_uname]")
     qdf.Parameters("_uname") = username
-    Debug.Print qdf.SQL
+
     Set rs = qdf.OpenRecordset
 
     If rs.BOF And rs.EOF Then ' If account not exist in database
@@ -203,10 +228,11 @@ Public Function GetEnrollee(Optional page As Integer = 1, Optional search As Str
     
     query = "SELECT * FROM enrollee"
     
-    ' Search
+    ' If a user uses the search bar
     If search <> "" Then
         rs.Close
         Set rs = Nothing
+        ' this is SQL.
         query = "SELECT * FROM enrollee " & _
         "WHERE enrollee_id LIKE '*" & search & "*' " & _
         "OR grade_level LIKE '*" & search & "*' " & _
@@ -223,15 +249,15 @@ Public Function GetEnrollee(Optional page As Integer = 1, Optional search As Str
         "OR mother_name LIKE '*" & search & "*' " & _
         "OR guardian_name LIKE '*" & search & "*' "
     End If
-    Debug.Print query
     
     Set qdf = db.CreateQueryDef("", query)
     Set rs = qdf.OpenRecordset
     
     ' Page
-    startIndex = (page - 1) * 23 ' where the rs starts
-    stopIndex = startIndex ' where the rs ends
+    startIndex = (page - 1) * 23    ' where the rs starts
+    stopIndex = startIndex          ' where the rs ends
     
+    ' Gets the total record count on the recordset
     total = 0
     If rs.RecordCount <> 0 Then
         rs.MoveLast
@@ -239,59 +265,76 @@ Public Function GetEnrollee(Optional page As Integer = 1, Optional search As Str
         rs.MoveFirst
     End If
     
+    ' Move at the start of the rs
     If page > 1 Then
         rs.Move startIndex
     End If
     
+    ' Start processing the recordset.
+    ' Nag-loloop until naka process na sya ng 23 records ng enrollees.
+    ' For every page, 23 records ang dinidisplay ng list.
+    ' 1. Creates an object Enrollee (check out Enrollee.cls) for every loop
+    ' 2. Saves the recordset to the properties of Enrollee object
+    ' 3. Adds the Enrollee object to the enrollees Collection. (Try to search for "Collection vb6" on google)
     i = 1
     While Not rs.EOF And i <= 23
-        Set En = New Enrollee
-        With En
+        Set En = New Enrollee ' 1.
+        With En ' 2.
+            ' Enrollee.property = rs!field_name
             .id = rs!enrollee_id
+            .Enrolled = rs!is_enrolled
             .Grade = rs!grade_level
+            .Section = IIf(IsNull(rs!Section), "N/A", rs!Section)
             .Lname = rs!last_name
             .Fname = rs!first_name
             .Mname = rs!middle_name
+            .Tuition = rs!Tuition
             .Sex = rs!Sex
             .Age = rs!Age
             .Birthdate = rs!Birthdate
             .Birthplace = rs!Birthplace
             .Mt = rs!mother_tongue
-            .Address = rs!Address
-            .Fathername = rs!father_name
+            .address = rs!address
+            .fatherName = rs!father_name
             .Fnum = rs!father_no
-            .MotherName = rs!mother_name
+            .motherName = rs!mother_name
             .Mnum = rs!mother_no
-            .GuardianName = rs!guardian_name
+            .guardianName = rs!guardian_name
             .Gnum = rs!guardian_no
             .Submission = rs!date_enrolled
         End With
-        enrollees.Add En
+        enrollees.Add En ' 3.
         i = i + 1
         stopIndex = stopIndex + 1
         rs.MoveNext
     Wend
     
-    pages = CInt(total / 23) ' ceil dividing to get total pages
+    pages = (total \ 23) + 1 ' ceil dividing to get total pages
+    
+    ' Add all the needed by the pagination the the result Collection
     With result
         .Add enrollees, "enrollees"
-        .Add total, "recordCount"
-        .Add pages, "pages"
-        .Add startIndex + 1, "startIndex"
-        .Add stopIndex, "stopIndex"
+        .Add total, "recordCount"           ' total records sa table or search query
+        .Add pages, "pages"                 ' kung ilang pages
+        .Add startIndex + 1, "startIndex"   ' saang record nag uumpisa
+        .Add stopIndex, "stopIndex"         ' saang record nagtatapos
     End With
-    Debug.Print result.Item("pages")
     
+    ' Return the result to where the function called
     Set GetEnrollee = result
 End Function
-'
+
+' Stuff here is essentially the same with the GetEnrollee Function.
+' The only difference is instead of handling Enrollees, this function
+' handles Users.
 Public Function GetUser(isAdmin As Boolean, Optional page As Integer = 1, Optional search As String = "") As Collection
     Dim qdf As QueryDef
     Dim users As New Collection
     Dim u As User
     Dim result As New Collection
     
-    Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE is_admin=[_isadmin]")
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE NOT username=[_currentuser] AND is_admin=[_isadmin]")
+    qdf.Parameters("_currentuser") = CurrentUser.username
     qdf.Parameters("_isadmin") = isAdmin
     
     Set rs = qdf.OpenRecordset
@@ -346,4 +389,86 @@ Public Function GetUser(isAdmin As Boolean, Optional page As Integer = 1, Option
     Set rs = Nothing
     
     Set GetUser = result
+End Function
+
+Public Function UpdateUser(id As Integer, NewUser As User)
+    Dim qdf As QueryDef
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
+    qdf.Parameters("_id") = id
+    
+    Set rs = qdf.OpenRecordset
+    
+    With rs
+        .Edit
+        !username = username
+        !password = password
+        !is_admin = adminPerm
+        !date_created = Date
+        .Update
+    End With
+    
+    rs.Close
+    Set rs = Nothing
+End Function
+
+Public Function DeleteUser(id As Integer)
+    Dim qdf As QueryDef
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE staff_id=[_id]")
+    qdf.Parameters("_id") = id
+    
+    Set rs = qdf.OpenRecordset
+    
+    rs.Delete
+    
+    rs.Close
+    Set rs = Nothing
+End Function
+
+' FIXME: sex not updating
+' TODO: allow tuition update
+Public Function UpdateEnrollee(id As Integer, NewEnrollee As Enrollee)
+    Dim qdf As QueryDef
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
+    qdf.Parameters("_id") = id
+    
+    Set rs = qdf.OpenRecordset
+
+    With rs
+        .Edit
+        !last_name = NewEnrollee.Lname
+        !first_name = NewEnrollee.Fname
+        !middle_name = NewEnrollee.Mname
+        !grade_level = NewEnrollee.Grade
+        !Tuition = NewEnrollee.Tuition
+        !Sex = NewEnrollee.Sex
+        !Age = NewEnrollee.Age
+        !Birthdate = NewEnrollee.Birthdate
+        !Birthplace = NewEnrollee.Birthplace
+        !mother_tongue = NewEnrollee.Mt
+        !address = NewEnrollee.address
+        !father_name = NewEnrollee.fatherName
+        !father_no = NewEnrollee.Fnum
+        !mother_name = NewEnrollee.motherName
+        !mother_no = NewEnrollee.Mnum
+        !guardian_name = NewEnrollee.guardianName
+        !guardian_no = NewEnrollee.Gnum
+        !date_enrolled = NewEnrollee.Submission
+        .Update
+    End With
+    
+    rs.Close
+    Set rs = Nothing
+End Function
+
+Public Function DeleteEnrollee(id As Integer)
+    Dim qdf As QueryDef
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
+    qdf.Parameters("_id") = id
+    
+    Set rs = qdf.OpenRecordset
+    
+    rs.Delete
+    
+    rs.Close
+    Set rs = Nothing
 End Function

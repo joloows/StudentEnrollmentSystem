@@ -111,6 +111,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub btnCreate_Click()
+    Dim result As Collection
+    Dim page As Integer
     Dim username As String
     Dim password As String
     Dim adminPerm As Boolean
@@ -125,9 +127,13 @@ Private Sub btnCreate_Click()
     adminPerm = False
     End If
     
+    page = IIf(adminPerm, StaffForm.aCurrentPage, StaffForm.rCurrentPage)
     If password1 = password2 Then ' password matches
         password = password1
         Call CreateUser(username, password, adminPerm)
+        
+        Set result = GetUser(adminPerm, page)
+        Call StaffForm.InitPagination(IIf(adminPerm, "admin", "registrar"), result)
     Else
         MsgBox "Passwords does not match. Please try again.", vbExclamation, "Error"
     End If

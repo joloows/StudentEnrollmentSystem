@@ -12,11 +12,14 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Private mId As Long
+Private mEnrolled As Boolean
 Private mGrade As Integer
+Private mSection As String
 Private mLname As String
 Private mFname As String
 Private mMname As String
 Private mSex As String
+Private mTuition As Integer
 Private mAge As Integer
 Private mBirthdate As Date
 Private mBirthplace As String
@@ -31,8 +34,15 @@ Private mGnum As String
 Private mSubmission As Date
 
 ' Get
+' Usage po nento is Enrollee.id, or Enrollee.Lname, etc.
+' Return value is kung ano po yung nakasave na
+' value ng mId.
 Public Property Get id() As Long
     id = mId
+End Property
+
+Public Property Get Enrolled() As Boolean
+    Enrolled = mEnrolled
 End Property
 
 Public Property Get Lname() As String
@@ -51,8 +61,16 @@ Public Property Get Grade() As Integer
     Grade = mGrade
 End Property
 
+Public Property Get Section() As String
+    Section = mSection
+End Property
+
 Public Property Get Sex() As String
     Sex = mSex
+End Property
+
+Public Property Get Tuition() As Integer
+    Tuition = mTuition
 End Property
 
 Public Property Get Age() As Integer
@@ -104,8 +122,15 @@ Public Property Get Submission() As Date
 End Property
 
 ' Let
+' Dito po natin inaasign value ni mId
+' To assign a value to the property of Enrollee,
+' we do Enrollee.<kung anong property ng Enrollee> = <value na gusto nating i-assign.>
 Public Property Let id(Value As Long)
     mId = Value
+End Property
+
+Public Property Let Enrolled(Value As Boolean)
+    mEnrolled = Value
 End Property
 
 Public Property Let Lname(Value As String)
@@ -124,8 +149,16 @@ Public Property Let Grade(Value As Integer)
     mGrade = Value
 End Property
 
+Public Property Let Section(Value As String)
+    mSection = Value
+End Property
+
 Public Property Let Sex(Value As String)
     mSex = Value
+End Property
+
+Public Property Let Tuition(Value As Integer)
+    mTuition = Value
 End Property
 
 Public Property Let Age(Value As Integer)

@@ -66,3 +66,7 @@ End Sub
 Private Sub btnCancel_Click()
     Unload Me
 End Sub
+
+Private Sub Form_Load()
+    txtPage.SetFocus
+End Sub

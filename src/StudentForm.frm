@@ -15,10 +15,20 @@ Begin VB.Form StudentForm
    Begin VB.CommandButton Command1 
       Caption         =   "Command1"
       Height          =   375
-      Left            =   8640
-      TabIndex        =   72
-      Top             =   1080
-      Width           =   975
+      Left            =   7800
+      TabIndex        =   75
+      Top             =   480
+      Width           =   495
+   End
+   Begin VB.ComboBox cbxMOP 
+      Height          =   315
+      ItemData        =   "StudentForm.frx":2EAEE
+      Left            =   8160
+      List            =   "StudentForm.frx":2EAFB
+      TabIndex        =   73
+      Text            =   "   ------------"
+      Top             =   1275
+      Width           =   1215
    End
    Begin VB.PictureBox Picture1 
       Appearance      =   0  'Flat
@@ -28,7 +38,7 @@ Begin VB.Form StudentForm
       ForeColor       =   &H80000008&
       Height          =   1575
       Left            =   360
-      Picture         =   "StudentForm.frx":2EAEE
+      Picture         =   "StudentForm.frx":2EB19
       ScaleHeight     =   1575
       ScaleWidth      =   1695
       TabIndex        =   69
@@ -278,6 +288,32 @@ Begin VB.Form StudentForm
       TabIndex        =   2
       Top             =   2880
       Width           =   2175
+   End
+   Begin VB.Label Label39 
+      AutoSize        =   -1  'True
+      Caption         =   "?"
+      Height          =   195
+      Left            =   9480
+      TabIndex        =   74
+      Top             =   1320
+      Width           =   90
+   End
+   Begin VB.Shape Shape1 
+      Height          =   495
+      Left            =   9398
+      Shape           =   3  'Circle
+      Top             =   1175
+      Width           =   255
+   End
+   Begin VB.Label Label38 
+      Alignment       =   2  'Center
+      AutoSize        =   -1  'True
+      Caption         =   "* MOP:"
+      Height          =   195
+      Left            =   7425
+      TabIndex        =   72
+      Top             =   1320
+      Width           =   525
    End
    Begin VB.Label Label37 
       Alignment       =   2  'Center
@@ -707,6 +743,9 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+' For determining the action to be taken by btnSubmitRecord_Click()
+' 0 for create, 1 for update
+Public inputMode As Integer
 
 Private Sub btnClear_Click()
     Call ClearForm
@@ -716,46 +755,120 @@ Private Sub btnLgn_Click()
     If CurrentUser.isAuthenticated Then
         StaffForm.Show
     Else
-        LoginForm.Show
+        LoginForm.Show vbModal
     End If
 End Sub
 
 Private Sub btnSubmitRecord_Click()
-
-    x = MsgBox("Are you sure the details entered are correct?", vbYesNo + vbExclamation, "Confirm")
+    Dim En As New Enrollee
+    Dim result As Collection
+    Dim s As String
+    Dim totalTuition
     
-    ' If yes, Add record to database
-    If x = 6 Then
-        Dim En As New Enrollee
+    If optMale Then
+        s = optMale.Caption
+    ElseIf optFemale Then
+        s = optFemale.Caption
+    End If
+    
+    If inputMode = 1 Then 'update enrollee
+    
+        x = MsgBox("Are you sure the updated details are correct?", vbYesNo + vbExclamation, "Confirm")
         
-        With En
-            .Lname = txtLname.Text
-            .Fname = txtFname.Text
-            .Mname = txtMname.Text
-            .Grade = txtGrade.Text
-            If optMale Then
-                .Sex = optMale.Caption
-            ElseIf optFemale Then
-                .Sex = optFemale.Caption
-            End If
-            .Age = CInt(txtAge.Text)
-            .Birthdate = CDate(txtBm.Text & "/" & txtBd.Text & "/" & txtBy.Text)
-            .Birthplace = txtBirth.Text
-            .Mt = txtMt.Text
-            .Address = txtHno.Text & ", " & txtSt.Text & ", " & txtBrgy.Text & ", " & txtCity.Text & ", " & txtProv.Text & " " & txtZip.Text
-            .Fathername = txtfFname.Text & " " & txtfMname.Text & " " & txtfLname.Text
-            .Fnum = txtfNum.Text
-            .MotherName = txtmFname.Text & " " & txtmMname.Text & " " & txtmLname.Text
-            .Mnum = txtmNum.Text
-            .GuardianName = txtgFname.Text & " " & txtgMname.Text & " " & txtgLname.Text
-            .Gnum = txtgNum.Text
-            .Submission = Format(Now, "mm/dd/yyyy")
-        End With
+        totalTuition = CalculateTuition(cbxMOP.Text)
+        If totalTuition = -1 Then
+            MsgBox "MOP not selected.", vbExclamation, "Error"
+            Exit Sub
+        End If
         
-        Call AddEnrollee(En)
-        MsgBox "Submission recorded successfuly.", vbInformation, "Success"
+        If x = 6 Then
+            
+            With En
+                .Lname = txtLname.Text
+                .Fname = txtFname.Text
+                .Mname = txtMname.Text
+                .Grade = txtGrade.Text
+                .Sex = s
+                .Tuition = totalTuition
+                .Age = CInt(txtAge.Text)
+                .Birthdate = CDate(txtBm.Text & "/" & txtBd.Text & "/" & txtBy.Text)
+                .Birthplace = txtBirth.Text
+                .Mt = txtMt.Text
+                .address = txtHno.Text & ", " & txtSt.Text & ", " & txtBrgy.Text & ", " & txtCity.Text & ", " & txtProv.Text & " " & txtZip.Text
+                .fatherName = txtfFname.Text & " " & txtfMname.Text & " " & txtfLname.Text
+                .Fnum = txtfNum.Text
+                .motherName = txtmFname.Text & " " & txtmMname.Text & " " & txtmLname.Text
+                .Mnum = txtmNum.Text
+                .guardianName = txtgFname.Text & " " & txtgMname.Text & " " & txtgLname.Text
+                .Gnum = txtgNum.Text
+            End With
+            
+            Call UpdateEnrollee(StaffForm.selectedEnrollee.id, En)
+            MsgBox "Submission recorded successfuly.", vbInformation, "Success"
+            
+            Set result = GetEnrollee(StaffForm.eCurrentPage, StaffForm.search)
+            Call StaffForm.InitPagination("enrollee", result)
+            
+            Unload EnSelectForm
+            Unload Me
+        End If
+        
+        
+    Else 'create enrollee
+        
+        x = MsgBox("Are you sure the details are correct?", vbYesNo + vbExclamation, "Confirm")
+        totalTuition = CalculateTuition(cbxMOP.Text)
+        If totalTuition = -1 Then
+            MsgBox "MOP not selected.", vbExclamation, "Error"
+            Exit Sub
+        End If
+
+        ' If yes, Add record to database
+        If x = 6 Then
+            
+            With En
+                .Lname = txtLname.Text
+                .Fname = txtFname.Text
+                .Mname = txtMname.Text
+                .Grade = txtGrade.Text
+                .Tuition = totalTuition
+                .Sex = s
+                .Age = CInt(txtAge.Text)
+                .Birthdate = CDate(txtBm.Text & "/" & txtBd.Text & "/" & txtBy.Text)
+                .Birthplace = txtBirth.Text
+                .Mt = txtMt.Text
+                .address = txtHno.Text & ", " & txtSt.Text & ", " & txtBrgy.Text & ", " & txtCity.Text & ", " & txtProv.Text & " " & txtZip.Text
+                .fatherName = txtfFname.Text & " " & txtfMname.Text & " " & txtfLname.Text
+                .Fnum = txtfNum.Text
+                .motherName = txtmFname.Text & " " & txtmMname.Text & " " & txtmLname.Text
+                .Mnum = txtmNum.Text
+                .guardianName = txtgFname.Text & " " & txtgMname.Text & " " & txtgLname.Text
+                .Gnum = txtgNum.Text
+                .Submission = Format(Now, "mm/dd/yyyy")
+            End With
+            
+            Call AddEnrollee(En)
+            MsgBox "Submission recorded successfuly.", vbInformation, "Success"
+        End If
     End If
 End Sub
+
+Private Function CalculateTuition(mode As String)
+    Const BASE_TUITION As Integer = 10500
+    Dim totalTuition As Integer
+
+    If mode = "Cash" Then
+        totalTuition = BASE_TUITION * 0.9
+    ElseIf mode = "INSTL. 2" Then
+        totalTuition = BASE_TUITION * 1.05
+    ElseIf mode = "INSTL. 3" Then
+        totalTuition = BASE_TUITION * 1.1
+    Else
+        totalTuition = -1
+    End If
+    CalculateTuition = totalTuition
+    
+End Function
 
 Private Sub ClearForm()
     txtLname.Text = ""
@@ -806,6 +919,10 @@ Private Sub Form_Load()
     
     Picture1.Picture = Picture1.Image
     
+    Label39.MousePointer = vbCustom
+    P = App.Path & "\hand.ico"
+    Label39.MouseIcon = LoadPicture(P)
+    
     ' Temporary autofill student form
     txtLname.Text = "Antonio"
     txtFname.Text = "Angelo"
@@ -840,3 +957,6 @@ Private Sub Form_Load()
 End Sub
 
 
+Private Sub Label39_Click()
+    tuitionDialog.Show vbModal
+End Sub

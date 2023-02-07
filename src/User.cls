@@ -20,6 +20,8 @@ Private mPassword As String
 Private mIsAdmin As Boolean
 Private mDateCreated As Date
 
+
+' Same thing with Enrollee Class.
 Public Property Get isAuthenticated() As Boolean
     isAuthenticated = mIsAuthenticated
 End Property
