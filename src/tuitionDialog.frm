@@ -41,7 +41,7 @@ Begin VB.Form tuitionDialog
       Caption         =   "- Installment (three payments):  10% interest"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   9.75
+         Size            =   8.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -52,13 +52,13 @@ Begin VB.Form tuitionDialog
       Left            =   360
       TabIndex        =   4
       Top             =   2400
-      Width           =   4095
+      Width           =   4455
    End
    Begin VB.Label Label2 
       Caption         =   "- Installment (two payments): 5% interest"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   9.75
+         Size            =   8.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -69,13 +69,13 @@ Begin VB.Form tuitionDialog
       Left            =   360
       TabIndex        =   3
       Top             =   1920
-      Width           =   3975
+      Width           =   4455
    End
    Begin VB.Label Label1 
       Caption         =   "- Cash: 10% discount"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   9.75
+         Size            =   8.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False

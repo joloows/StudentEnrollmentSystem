@@ -1,13 +1,21 @@
 VERSION 5.00
 Begin VB.Form EnSelectForm 
-   Caption         =   "Form1"
-   ClientHeight    =   3630
+   Caption         =   "Manage Enrollee"
+   ClientHeight    =   4200
    ClientLeft      =   9210
    ClientTop       =   4950
    ClientWidth     =   4575
    LinkTopic       =   "Form1"
-   ScaleHeight     =   3630
+   ScaleHeight     =   4200
    ScaleWidth      =   4575
+   Begin VB.CommandButton btnAssignSection 
+      Caption         =   "Assign Section"
+      Height          =   495
+      Left            =   1560
+      TabIndex        =   10
+      Top             =   2520
+      Width           =   1455
+   End
    Begin VB.CheckBox chkEnrolled 
       Caption         =   "Check1"
       Height          =   255
@@ -21,7 +29,7 @@ Begin VB.Form EnSelectForm
       Height          =   375
       Left            =   2760
       TabIndex        =   7
-      Top             =   2760
+      Top             =   3360
       Width           =   1215
    End
    Begin VB.CommandButton btnEnUpdate 
@@ -29,7 +37,7 @@ Begin VB.Form EnSelectForm
       Height          =   375
       Left            =   600
       TabIndex        =   6
-      Top             =   2760
+      Top             =   3360
       Width           =   1215
    End
    Begin VB.Label Label4 
@@ -94,7 +102,7 @@ Begin VB.Form EnSelectForm
    End
    Begin VB.Label Label3 
       Alignment       =   2  'Center
-      Caption         =   "Edit Enrollee"
+      Caption         =   "Manage Enrollee"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   17.25
@@ -134,12 +142,12 @@ Private Sub btnEnDelete_Click()
 End Sub
 
 Private Sub btnEnUpdate_Click()
-    Dim address() As String
+    Dim Address() As String
     Dim x() As String
     Dim zip As String
-    Dim fatherName() As String
-    Dim motherName() As String
-    Dim guardianName() As String
+    Dim Fathername() As String
+    Dim MotherName() As String
+    Dim GuardianName() As String
     Dim mop As Integer
     
     StudentForm.Hide
@@ -153,12 +161,12 @@ Private Sub btnEnUpdate_Click()
         mop = 0
     End If
     
-    address = Split(En.address, ", ")
-    x = Split(address(UBound(address)), " ")
+    Address = Split(En.Address, ", ")
+    x = Split(Address(UBound(Address)), " ")
     zip = x(UBound(x))
-    fatherName = Split(En.fatherName, " ")
-    motherName = Split(En.motherName, " ")
-    guardianName = Split(En.guardianName, " ")
+    Fathername = Split(En.Fathername, " ")
+    MotherName = Split(En.MotherName, " ")
+    GuardianName = Split(En.GuardianName, " ")
     With StudentForm
         .cbxMOP.ListIndex = mop
         .txtLname.Text = En.Lname
@@ -173,23 +181,23 @@ Private Sub btnEnUpdate_Click()
         .txtBy.Text = Year(En.Birthdate)
         .txtBirth.Text = En.Birthplace
         .txtMt.Text = En.Mt
-        .txtHno.Text = address(0)
-        .txtSt.Text = address(1)
-        .txtBrgy.Text = address(2)
-        .txtCity.Text = address(3)
+        .txtHno.Text = Address(0)
+        .txtSt.Text = Address(1)
+        .txtBrgy.Text = Address(2)
+        .txtCity.Text = Address(3)
         .txtProv.Text = x(0)
         .txtZip.Text = zip
-        .txtfLname.Text = fatherName(0)
-        .txtfFname.Text = fatherName(2)
-        .txtfMname.Text = fatherName(1)
+        .txtfLname.Text = Fathername(0)
+        .txtfFname.Text = Fathername(2)
+        .txtfMname.Text = Fathername(1)
         .txtfNum.Text = En.Fnum
-        .txtmLname.Text = motherName(2)
-        .txtmFname.Text = motherName(0)
-        .txtmMname.Text = motherName(1)
+        .txtmLname.Text = MotherName(2)
+        .txtmFname.Text = MotherName(0)
+        .txtmMname.Text = MotherName(1)
         .txtmNum.Text = En.Mnum
-        .txtgLname.Text = guardianName(2)
-        .txtgFname.Text = guardianName(0)
-        .txtgMname.Text = guardianName(1)
+        .txtgLname.Text = GuardianName(2)
+        .txtgFname.Text = GuardianName(0)
+        .txtgMname.Text = GuardianName(1)
         .txtgNum.Text = En.Gnum
     End With
     
@@ -197,6 +205,31 @@ Private Sub btnEnUpdate_Click()
     StudentForm.inputMode = 1
     StudentForm.Show vbModal
     StudentForm.inputMode = 0
+End Sub
+
+' fix error handler
+Private Sub chkEnrolled_Click()
+    Dim status As Boolean
+    
+    
+    status = CBool(chkEnrolled.Value)
+    Call UpdateEnrolleeStatus(status, StaffForm.selectedEnrollee.id)
+    
+    Set result = GetEnrollee(StaffForm.eCurrentPage, StaffForm.search)
+    Call StaffForm.InitPagination("enrollee", result)
+End Sub
+
+Private Sub btnAssignSection_Click()
+    Dim Section As String
+    
+    Section = StrConv(InputBox("Enter the name of the section:", "Assign Section"), vbProperCase)
+    
+    Call AssignEnrolleeSection(Section, StaffForm.selectedEnrollee.id)
+    
+    lblSection.Caption = Section
+    
+    Set result = GetEnrollee(StaffForm.eCurrentPage, StaffForm.search)
+    Call StaffForm.InitPagination("enrollee", result)
 End Sub
 
 Private Sub Form_Load()

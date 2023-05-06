@@ -89,6 +89,7 @@ Attribute InitDatabase.VB_Description = "Initializes the database needed for the
             .Append LastNameField
             .Append FirstNameField
             .Append MiddleNameField
+            .Append TuitionField
             .Append SexField
             .Append AgeField
             .Append BirthdateField
@@ -230,8 +231,6 @@ Public Function GetEnrollee(Optional page As Integer = 1, Optional search As Str
     
     ' If a user uses the search bar
     If search <> "" Then
-        rs.Close
-        Set rs = Nothing
         ' this is SQL.
         query = "SELECT * FROM enrollee " & _
         "WHERE enrollee_id LIKE '*" & search & "*' " & _
@@ -278,13 +277,14 @@ Public Function GetEnrollee(Optional page As Integer = 1, Optional search As Str
     ' 3. Adds the Enrollee object to the enrollees Collection. (Try to search for "Collection vb6" on google)
     i = 1
     While Not rs.EOF And i <= 23
+        Debug.Print CStr(rs!date_enrolled)
         Set En = New Enrollee ' 1.
         With En ' 2.
             ' Enrollee.property = rs!field_name
             .id = rs!enrollee_id
             .Enrolled = rs!is_enrolled
             .Grade = rs!grade_level
-            .Section = IIf(IsNull(rs!Section), "N/A", rs!Section)
+            .section = IIf(IsNull(rs!section), "N/A", rs!section)
             .Lname = rs!last_name
             .Fname = rs!first_name
             .Mname = rs!middle_name
@@ -393,17 +393,16 @@ End Function
 
 Public Function UpdateUser(id As Integer, NewUser As User)
     Dim qdf As QueryDef
-    Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE staff_id=[_id]")
     qdf.Parameters("_id") = id
     
     Set rs = qdf.OpenRecordset
     
     With rs
         .Edit
-        !username = username
-        !password = password
-        !is_admin = adminPerm
-        !date_created = Date
+        !username = NewUser.username
+        !password = NewUser.password
+        !is_admin = NewUser.isAdmin
         .Update
     End With
     
@@ -452,7 +451,6 @@ Public Function UpdateEnrollee(id As Integer, NewEnrollee As Enrollee)
         !mother_no = NewEnrollee.Mnum
         !guardian_name = NewEnrollee.guardianName
         !guardian_no = NewEnrollee.Gnum
-        !date_enrolled = NewEnrollee.Submission
         .Update
     End With
     
@@ -471,4 +469,44 @@ Public Function DeleteEnrollee(id As Integer)
     
     rs.Close
     Set rs = Nothing
+End Function
+
+Public Function UpdateEnrolleeStatus(status As Boolean, id As Integer)
+    Dim En As Enrollee
+    Dim qdf As QueryDef
+    
+        Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
+        qdf.Parameters("_id") = id
+        
+        Set rs = qdf.OpenRecordset
+    
+        With rs
+            .Edit
+            !is_enrolled = status
+            .Update
+        End With
+        
+        rs.Close
+        Set rs = Nothing
+End Function
+
+Public Function AssignEnrolleeSection(section As String, id As Integer)
+        Dim En As Enrollee
+    Dim qdf As QueryDef
+    
+        Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
+        qdf.Parameters("_id") = id
+        
+        Set rs = qdf.OpenRecordset
+    
+        With rs
+            .Edit
+            !section = section
+            .Update
+        End With
+        
+        rs.Close
+        Set rs = Nothing
+        
+        AssignEnrolleeSection = 0
 End Function

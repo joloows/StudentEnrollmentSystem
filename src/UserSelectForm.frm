@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin VB.Form UserSelectForm 
-   Caption         =   "Edit User"
+   Caption         =   "Manage User"
    ClientHeight    =   4770
    ClientLeft      =   9810
    ClientTop       =   4500
@@ -70,7 +70,7 @@ Begin VB.Form UserSelectForm
    End
    Begin VB.Label Label3 
       Alignment       =   2  'Center
-      Caption         =   "Edit User"
+      Caption         =   "Manage User"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   17.25
@@ -120,7 +120,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private u As User
-Private result As Collection
+
 
 Private Sub btnChange_Click()
     If lblPermission.Caption = "admin" Then
@@ -133,11 +133,12 @@ End Sub
 Private Sub btnDeleteUser_Click()
     Dim isAdmin As Boolean
     Dim page As Integer
+    Dim result As Collection
     
     isAdmin = IIf(StaffForm.selectedUser.isAdmin, True, False)
     page = IIf(StaffForm.selectedUser.isAdmin, StaffForm.aCurrentPage, StaffForm.rCurrentPage)
     
-    x = InputBox("Enter your password to confirm account deletion")
+    x = InputBox("Enter your password to confirm account deletion", "Confirm password")
     If x = CurrentUser.password Then
         Call DeleteUser(StaffForm.selectedUser.id)
         MsgBox "User successfully deleted.", vbInformation, "Success"
@@ -146,6 +147,8 @@ Private Sub btnDeleteUser_Click()
         Call StaffForm.InitPagination(IIf(isAdmin, "admin", "registrar"), result)
         
         Unload Me
+    ElseIf x = "" Then
+        Exit Sub
     Else
         MsgBox "The password entered doesn't match the current user password.", vbExclamation, "Error"
     End If
@@ -155,6 +158,8 @@ Private Sub btnUpdateUser_Click()
     Dim NewUser As New User
     Dim isAdmin As Boolean
     Dim page As Integer
+    Dim adminResult As Collection
+    Dim registrarResult As Collection
     
     isAdmin = IIf(StaffForm.selectedUser.isAdmin, True, False)
     page = IIf(StaffForm.selectedUser.isAdmin, StaffForm.aCurrentPage, StaffForm.rCurrentPage)
@@ -170,8 +175,11 @@ Private Sub btnUpdateUser_Click()
         Call UpdateUser(StaffForm.selectedUser.id, NewUser)
         MsgBox "User successfully updated.", vbInformation, "Success"
         
-        Set result = GetUser(isAdmin, page)
-        Call StaffForm.InitPagination(IIf(isAdmin, "admin", "registrar"), result)
+        Set adminResult = GetUser(True, StaffForm.aCurrentPage)
+        Set registrarResult = GetUser(False, StaffForm.rCurrentPage)
+        
+        Call StaffForm.InitPagination("admin", adminResult)
+        Call StaffForm.InitPagination("registrar", registrarResult)
         
         Unload Me
     Else

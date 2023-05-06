@@ -124,7 +124,7 @@ Private Sub btnCreate_Click()
     If chkboxAdminPerm.Value = 1 Then ' If checked
         adminPerm = True
     Else
-    adminPerm = False
+        adminPerm = False
     End If
     
     page = IIf(adminPerm, StaffForm.aCurrentPage, StaffForm.rCurrentPage)
@@ -134,6 +134,7 @@ Private Sub btnCreate_Click()
         
         Set result = GetUser(adminPerm, page)
         Call StaffForm.InitPagination(IIf(adminPerm, "admin", "registrar"), result)
+        Unload Me
     Else
         MsgBox "Passwords does not match. Please try again.", vbExclamation, "Error"
     End If

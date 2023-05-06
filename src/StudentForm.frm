@@ -12,14 +12,6 @@ Begin VB.Form StudentForm
    MinButton       =   0   'False
    ScaleHeight     =   10515
    ScaleWidth      =   9975
-   Begin VB.CommandButton Command1 
-      Caption         =   "Command1"
-      Height          =   375
-      Left            =   7800
-      TabIndex        =   75
-      Top             =   480
-      Width           =   495
-   End
    Begin VB.ComboBox cbxMOP 
       Height          =   315
       ItemData        =   "StudentForm.frx":2EAEE

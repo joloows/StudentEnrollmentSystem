@@ -12,14 +12,6 @@ Begin VB.Form StaffForm
    MinButton       =   0   'False
    ScaleHeight     =   8025
    ScaleWidth      =   12255
-   Begin VB.CommandButton btnEditSection 
-      Caption         =   "Edit Sections"
-      Height          =   525
-      Left            =   9480
-      TabIndex        =   87
-      Top             =   840
-      Width           =   975
-   End
    Begin VB.Frame Sidebar 
       Height          =   7935
       Left            =   120
@@ -39,7 +31,7 @@ Begin VB.Form StaffForm
          EndProperty
          Height          =   855
          Left            =   120
-         TabIndex        =   46
+         TabIndex        =   44
          Top             =   4560
          Width           =   2295
       End
@@ -159,388 +151,6 @@ Begin VB.Form StaffForm
          Width           =   1095
       End
    End
-   Begin VB.Frame RegistrarFrame 
-      Caption         =   "RegistrarFrame"
-      Height          =   7935
-      Left            =   2760
-      TabIndex        =   67
-      Top             =   0
-      Width           =   9375
-      Begin VB.CommandButton Command25 
-         Caption         =   "Sort by"
-         Height          =   285
-         Left            =   6720
-         TabIndex        =   78
-         Top             =   1080
-         Width           =   975
-      End
-      Begin VB.CommandButton Command24 
-         Caption         =   "Search by"
-         Height          =   285
-         Left            =   5520
-         TabIndex        =   77
-         Top             =   1080
-         Width           =   975
-      End
-      Begin VB.CommandButton Command23 
-         Height          =   285
-         Left            =   240
-         TabIndex        =   76
-         Top             =   1080
-         Width           =   285
-      End
-      Begin VB.CommandButton btnRlast 
-         Caption         =   "Last >>"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   7080
-         TabIndex        =   75
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnRnext 
-         Caption         =   "Next >"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   5880
-         TabIndex        =   74
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton Command20 
-         Caption         =   "Go to page"
-         Height          =   375
-         Left            =   3960
-         TabIndex        =   73
-         Top             =   7080
-         Width           =   1335
-      End
-      Begin VB.CommandButton btnRprev 
-         Caption         =   "< Previous"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   2400
-         TabIndex        =   72
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnRfirst 
-         Caption         =   "<< First"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   1200
-         TabIndex        =   71
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnCreateAcc 
-         Caption         =   "Create Account"
-         Height          =   525
-         Index           =   0
-         Left            =   7920
-         TabIndex        =   70
-         Top             =   840
-         Width           =   1095
-      End
-      Begin VB.CommandButton Command9 
-         Caption         =   "Search"
-         Height          =   285
-         Left            =   4320
-         TabIndex        =   69
-         Top             =   1080
-         Width           =   975
-      End
-      Begin VB.TextBox Text2 
-         Height          =   285
-         Left            =   720
-         TabIndex        =   68
-         Top             =   1080
-         Width           =   3495
-      End
-      Begin MSComctlLib.ListView RegistrarLV 
-         Height          =   5415
-         Left            =   1440
-         TabIndex        =   79
-         Top             =   1560
-         Width           =   6375
-         _ExtentX        =   11245
-         _ExtentY        =   9551
-         View            =   3
-         LabelWrap       =   -1  'True
-         HideSelection   =   -1  'True
-         AllowReorder    =   -1  'True
-         _Version        =   393217
-         ForeColor       =   -2147483640
-         BackColor       =   -2147483643
-         BorderStyle     =   1
-         Appearance      =   1
-         NumItems        =   0
-      End
-      Begin VB.Label txtRPages 
-         AutoSize        =   -1  'True
-         Caption         =   "(cur p.) of (total p.)"
-         Height          =   195
-         Left            =   4200
-         TabIndex        =   86
-         Top             =   7560
-         Width           =   1290
-      End
-      Begin VB.Label Label16 
-         AutoSize        =   -1  'True
-         Caption         =   "Page:"
-         Height          =   195
-         Left            =   3600
-         TabIndex        =   85
-         Top             =   7560
-         Width           =   420
-      End
-      Begin VB.Label txtRIndex 
-         AutoSize        =   -1  'True
-         Caption         =   "record"
-         Height          =   195
-         Left            =   8160
-         TabIndex        =   84
-         Top             =   7560
-         Width           =   450
-      End
-      Begin VB.Label Label14 
-         AutoSize        =   -1  'True
-         Caption         =   "Showing:"
-         Height          =   195
-         Left            =   7320
-         TabIndex        =   83
-         Top             =   7560
-         Width           =   660
-      End
-      Begin VB.Label txtRResult 
-         AutoSize        =   -1  'True
-         Caption         =   "total"
-         Height          =   195
-         Left            =   1200
-         TabIndex        =   82
-         Top             =   7560
-         Width           =   300
-      End
-      Begin VB.Label Label12 
-         AutoSize        =   -1  'True
-         Caption         =   "Results:"
-         Height          =   195
-         Left            =   480
-         TabIndex        =   81
-         Top             =   7560
-         Width           =   570
-      End
-      Begin VB.Label Label8 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         Caption         =   "Manage Registrars"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   13.5
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   360
-         Left            =   3330
-         TabIndex        =   80
-         Top             =   360
-         Width           =   2640
-      End
-   End
-   Begin VB.Frame AdminFrame 
-      Caption         =   "AdminFrame"
-      Height          =   7935
-      Left            =   2760
-      TabIndex        =   47
-      Top             =   0
-      Width           =   9375
-      Begin VB.TextBox Text1 
-         Height          =   285
-         Left            =   720
-         TabIndex        =   59
-         Top             =   1080
-         Width           =   3495
-      End
-      Begin VB.CommandButton Command16 
-         Caption         =   "Search"
-         Height          =   285
-         Left            =   4320
-         TabIndex        =   58
-         Top             =   1080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnCreateAcc 
-         Caption         =   "Create Account"
-         Height          =   525
-         Index           =   1
-         Left            =   7920
-         TabIndex        =   56
-         Top             =   840
-         Width           =   1095
-      End
-      Begin VB.CommandButton btnAfirst 
-         Caption         =   "<< First"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   1200
-         TabIndex        =   55
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnAprev 
-         Caption         =   "< Previous"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   2400
-         TabIndex        =   54
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton Command12 
-         Caption         =   "Go to page"
-         Height          =   375
-         Left            =   3960
-         TabIndex        =   53
-         Top             =   7080
-         Width           =   1335
-      End
-      Begin VB.CommandButton btnAnext 
-         Caption         =   "Next >"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   5880
-         TabIndex        =   52
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnAlast 
-         Caption         =   "Last >>"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   7080
-         TabIndex        =   51
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton Command7 
-         Height          =   285
-         Left            =   240
-         TabIndex        =   50
-         Top             =   1080
-         Width           =   285
-      End
-      Begin VB.CommandButton Command6 
-         Caption         =   "Search by"
-         Height          =   285
-         Left            =   5520
-         TabIndex        =   49
-         Top             =   1080
-         Width           =   975
-      End
-      Begin VB.CommandButton Command5 
-         Caption         =   "Sort by"
-         Height          =   285
-         Left            =   6720
-         TabIndex        =   48
-         Top             =   1080
-         Width           =   975
-      End
-      Begin MSComctlLib.ListView AdminLV 
-         Height          =   5415
-         Left            =   1440
-         TabIndex        =   57
-         Top             =   1560
-         Width           =   6375
-         _ExtentX        =   11245
-         _ExtentY        =   9551
-         View            =   3
-         LabelWrap       =   -1  'True
-         HideSelection   =   -1  'True
-         AllowReorder    =   -1  'True
-         _Version        =   393217
-         ForeColor       =   -2147483640
-         BackColor       =   -2147483643
-         BorderStyle     =   1
-         Appearance      =   1
-         NumItems        =   0
-      End
-      Begin VB.Label Label29 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         Caption         =   "Manage Admins"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   13.5
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   360
-         Left            =   3510
-         TabIndex        =   66
-         Top             =   360
-         Width           =   2280
-      End
-      Begin VB.Label Label28 
-         AutoSize        =   -1  'True
-         Caption         =   "Results:"
-         Height          =   195
-         Left            =   480
-         TabIndex        =   65
-         Top             =   7560
-         Width           =   570
-      End
-      Begin VB.Label txtAResult 
-         AutoSize        =   -1  'True
-         Caption         =   "total"
-         Height          =   195
-         Left            =   1200
-         TabIndex        =   64
-         Top             =   7560
-         Width           =   300
-      End
-      Begin VB.Label Label19 
-         AutoSize        =   -1  'True
-         Caption         =   "Showing:"
-         Height          =   195
-         Left            =   7320
-         TabIndex        =   63
-         Top             =   7560
-         Width           =   660
-      End
-      Begin VB.Label txtAIndex 
-         AutoSize        =   -1  'True
-         Caption         =   "record"
-         Height          =   195
-         Left            =   8160
-         TabIndex        =   62
-         Top             =   7560
-         Width           =   450
-      End
-      Begin VB.Label Label10 
-         AutoSize        =   -1  'True
-         Caption         =   "Page:"
-         Height          =   195
-         Left            =   3600
-         TabIndex        =   61
-         Top             =   7560
-         Width           =   420
-      End
-      Begin VB.Label txtAPages 
-         AutoSize        =   -1  'True
-         Caption         =   "(cur p.) of (total p.)"
-         Height          =   195
-         Left            =   4200
-         TabIndex        =   60
-         Top             =   7560
-         Width           =   1290
-      End
-   End
    Begin VB.Frame EnrolleesFrame 
       Caption         =   "EnrolleesFrame"
       Height          =   7935
@@ -548,20 +158,15 @@ Begin VB.Form StaffForm
       TabIndex        =   1
       Top             =   0
       Width           =   9375
-      Begin VB.CommandButton Command4 
-         Caption         =   "Sort by"
-         Height          =   285
-         Left            =   5520
-         TabIndex        =   45
-         Top             =   1080
-         Width           =   975
-      End
-      Begin VB.CommandButton Command1 
-         Height          =   285
+      Begin VB.CommandButton btnRefreshEn 
+         DisabledPicture =   "StaffForm.frx":0000
+         Height          =   375
          Left            =   240
-         TabIndex        =   44
-         Top             =   1080
-         Width           =   285
+         Picture         =   "StaffForm.frx":424A
+         Style           =   1  'Graphical
+         TabIndex        =   62
+         Top             =   1050
+         Width           =   375
       End
       Begin VB.CommandButton btnElast 
          Caption         =   "Last >>"
@@ -646,7 +251,7 @@ Begin VB.Form StaffForm
          Height          =   285
          Left            =   720
          TabIndex        =   9
-         Top             =   1080
+         Top             =   1100
          Width           =   3495
       End
       Begin VB.Label txtEPages 
@@ -731,14 +336,16 @@ Begin VB.Form StaffForm
       Top             =   0
       Visible         =   0   'False
       Width           =   9375
-      Begin VB.TextBox Text7 
+      Begin VB.TextBox txtAuth1 
          Height          =   285
+         IMEMode         =   3  'DISABLE
          Left            =   2880
+         PasswordChar    =   "*"
          TabIndex        =   35
          Top             =   2760
          Width           =   2535
       End
-      Begin VB.CommandButton Command8 
+      Begin VB.CommandButton btnChangePassword 
          Caption         =   "Submit"
          Height          =   255
          Left            =   720
@@ -746,28 +353,34 @@ Begin VB.Form StaffForm
          Top             =   6360
          Width           =   855
       End
-      Begin VB.TextBox Text6 
+      Begin VB.TextBox txtConfirm 
          Height          =   285
+         IMEMode         =   3  'DISABLE
          Left            =   2880
+         PasswordChar    =   "*"
          TabIndex        =   33
          Top             =   5760
          Width           =   2535
       End
-      Begin VB.TextBox Text5 
+      Begin VB.TextBox txtNewPassword 
          Height          =   285
+         IMEMode         =   3  'DISABLE
          Left            =   2880
+         PasswordChar    =   "*"
          TabIndex        =   26
          Top             =   5160
          Width           =   2535
       End
-      Begin VB.TextBox Text4 
+      Begin VB.TextBox txtAuth2 
          Height          =   285
+         IMEMode         =   3  'DISABLE
          Left            =   2880
+         PasswordChar    =   "*"
          TabIndex        =   25
          Top             =   4560
          Width           =   2535
       End
-      Begin VB.CommandButton Command3 
+      Begin VB.CommandButton btnChangeUsername 
          Caption         =   "Submit"
          Height          =   255
          Left            =   720
@@ -775,7 +388,7 @@ Begin VB.Form StaffForm
          Top             =   3360
          Width           =   855
       End
-      Begin VB.TextBox Text3 
+      Begin VB.TextBox txtNewUsername 
          Height          =   285
          Left            =   2880
          TabIndex        =   22
@@ -899,6 +512,362 @@ Begin VB.Form StaffForm
          Width           =   2400
       End
    End
+   Begin VB.Frame RegistrarFrame 
+      Caption         =   "RegistrarFrame"
+      Height          =   7935
+      Left            =   2760
+      TabIndex        =   63
+      Top             =   0
+      Width           =   9375
+      Begin VB.CommandButton btnRefreshReg 
+         DisabledPicture =   "StaffForm.frx":46D4
+         Height          =   375
+         Left            =   240
+         Picture         =   "StaffForm.frx":891E
+         Style           =   1  'Graphical
+         TabIndex        =   80
+         Top             =   1050
+         Width           =   375
+      End
+      Begin VB.TextBox Text2 
+         Height          =   285
+         Left            =   720
+         TabIndex        =   71
+         Top             =   1100
+         Width           =   3495
+      End
+      Begin VB.CommandButton Command9 
+         Caption         =   "Search"
+         Height          =   285
+         Left            =   4320
+         TabIndex        =   70
+         Top             =   1080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnCreateAcc 
+         Caption         =   "Create Account"
+         Height          =   525
+         Index           =   0
+         Left            =   7920
+         TabIndex        =   69
+         Top             =   840
+         Width           =   1095
+      End
+      Begin VB.CommandButton btnRfirst 
+         Caption         =   "<< First"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   1200
+         TabIndex        =   68
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnRprev 
+         Caption         =   "< Previous"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   2400
+         TabIndex        =   67
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton Command20 
+         Caption         =   "Go to page"
+         Height          =   375
+         Left            =   3960
+         TabIndex        =   66
+         Top             =   7080
+         Width           =   1335
+      End
+      Begin VB.CommandButton btnRnext 
+         Caption         =   "Next >"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   5880
+         TabIndex        =   65
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnRlast 
+         Caption         =   "Last >>"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   7080
+         TabIndex        =   64
+         Top             =   7080
+         Width           =   975
+      End
+      Begin MSComctlLib.ListView RegistrarLV 
+         Height          =   5415
+         Left            =   1440
+         TabIndex        =   72
+         Top             =   1560
+         Width           =   6375
+         _ExtentX        =   11245
+         _ExtentY        =   9551
+         View            =   3
+         LabelWrap       =   -1  'True
+         HideSelection   =   -1  'True
+         AllowReorder    =   -1  'True
+         _Version        =   393217
+         ForeColor       =   -2147483640
+         BackColor       =   -2147483643
+         BorderStyle     =   1
+         Appearance      =   1
+         NumItems        =   0
+      End
+      Begin VB.Label Label8 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         Caption         =   "Manage Registrars"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   13.5
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   360
+         Left            =   3330
+         TabIndex        =   79
+         Top             =   360
+         Width           =   2640
+      End
+      Begin VB.Label Label12 
+         AutoSize        =   -1  'True
+         Caption         =   "Results:"
+         Height          =   195
+         Left            =   480
+         TabIndex        =   78
+         Top             =   7560
+         Width           =   570
+      End
+      Begin VB.Label txtRResult 
+         AutoSize        =   -1  'True
+         Caption         =   "total"
+         Height          =   195
+         Left            =   1200
+         TabIndex        =   77
+         Top             =   7560
+         Width           =   300
+      End
+      Begin VB.Label Label14 
+         AutoSize        =   -1  'True
+         Caption         =   "Showing:"
+         Height          =   195
+         Left            =   7320
+         TabIndex        =   76
+         Top             =   7560
+         Width           =   660
+      End
+      Begin VB.Label txtRIndex 
+         AutoSize        =   -1  'True
+         Caption         =   "record"
+         Height          =   195
+         Left            =   8160
+         TabIndex        =   75
+         Top             =   7560
+         Width           =   450
+      End
+      Begin VB.Label Label16 
+         AutoSize        =   -1  'True
+         Caption         =   "Page:"
+         Height          =   195
+         Left            =   3600
+         TabIndex        =   74
+         Top             =   7560
+         Width           =   420
+      End
+      Begin VB.Label txtRPages 
+         AutoSize        =   -1  'True
+         Caption         =   "(cur p.) of (total p.)"
+         Height          =   195
+         Left            =   4200
+         TabIndex        =   73
+         Top             =   7560
+         Width           =   1290
+      End
+   End
+   Begin VB.Frame AdminFrame 
+      Caption         =   "AdminFrame"
+      Height          =   7935
+      Left            =   2760
+      TabIndex        =   45
+      Top             =   0
+      Width           =   9375
+      Begin VB.CommandButton btnRefreshAdmin 
+         DisabledPicture =   "StaffForm.frx":8DA8
+         Height          =   375
+         Left            =   240
+         Picture         =   "StaffForm.frx":CFF2
+         Style           =   1  'Graphical
+         TabIndex        =   81
+         Top             =   1050
+         Width           =   375
+      End
+      Begin VB.TextBox Text1 
+         Height          =   285
+         Left            =   720
+         TabIndex        =   54
+         Top             =   1100
+         Width           =   3495
+      End
+      Begin VB.CommandButton Command16 
+         Caption         =   "Search"
+         Height          =   285
+         Left            =   4320
+         TabIndex        =   53
+         Top             =   1080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnCreateAcc 
+         Caption         =   "Create Account"
+         Height          =   525
+         Index           =   1
+         Left            =   7920
+         TabIndex        =   51
+         Top             =   840
+         Width           =   1095
+      End
+      Begin VB.CommandButton btnAfirst 
+         Caption         =   "<< First"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   1200
+         TabIndex        =   50
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnAprev 
+         Caption         =   "< Previous"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   2400
+         TabIndex        =   49
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton Command12 
+         Caption         =   "Go to page"
+         Height          =   375
+         Left            =   3960
+         TabIndex        =   48
+         Top             =   7080
+         Width           =   1335
+      End
+      Begin VB.CommandButton btnAnext 
+         Caption         =   "Next >"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   5880
+         TabIndex        =   47
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnAlast 
+         Caption         =   "Last >>"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   7080
+         TabIndex        =   46
+         Top             =   7080
+         Width           =   975
+      End
+      Begin MSComctlLib.ListView AdminLV 
+         Height          =   5415
+         Left            =   1440
+         TabIndex        =   52
+         Top             =   1560
+         Width           =   6375
+         _ExtentX        =   11245
+         _ExtentY        =   9551
+         View            =   3
+         LabelWrap       =   -1  'True
+         HideSelection   =   -1  'True
+         AllowReorder    =   -1  'True
+         _Version        =   393217
+         ForeColor       =   -2147483640
+         BackColor       =   -2147483643
+         BorderStyle     =   1
+         Appearance      =   1
+         NumItems        =   0
+      End
+      Begin VB.Label Label29 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         Caption         =   "Manage Admins"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   13.5
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   360
+         Left            =   3510
+         TabIndex        =   61
+         Top             =   360
+         Width           =   2280
+      End
+      Begin VB.Label Label28 
+         AutoSize        =   -1  'True
+         Caption         =   "Results:"
+         Height          =   195
+         Left            =   480
+         TabIndex        =   60
+         Top             =   7560
+         Width           =   570
+      End
+      Begin VB.Label txtAResult 
+         AutoSize        =   -1  'True
+         Caption         =   "total"
+         Height          =   195
+         Left            =   1200
+         TabIndex        =   59
+         Top             =   7560
+         Width           =   300
+      End
+      Begin VB.Label Label19 
+         AutoSize        =   -1  'True
+         Caption         =   "Showing:"
+         Height          =   195
+         Left            =   7320
+         TabIndex        =   58
+         Top             =   7560
+         Width           =   660
+      End
+      Begin VB.Label txtAIndex 
+         AutoSize        =   -1  'True
+         Caption         =   "record"
+         Height          =   195
+         Left            =   8160
+         TabIndex        =   57
+         Top             =   7560
+         Width           =   450
+      End
+      Begin VB.Label Label10 
+         AutoSize        =   -1  'True
+         Caption         =   "Page:"
+         Height          =   195
+         Left            =   3600
+         TabIndex        =   56
+         Top             =   7560
+         Width           =   420
+      End
+      Begin VB.Label txtAPages 
+         AutoSize        =   -1  'True
+         Caption         =   "(cur p.) of (total p.)"
+         Height          =   195
+         Left            =   4200
+         TabIndex        =   55
+         Top             =   7560
+         Width           =   1290
+      End
+   End
 End
 Attribute VB_Name = "StaffForm"
 Attribute VB_GlobalNameSpace = False
@@ -917,6 +886,8 @@ Public aCurrentPage As Integer
 Public aTotalPage As Integer
 Public rCurrentPage As Integer
 Public rTotalPage As Integer
+
+
 
 ' #################### ENROLLEE BUTTONS ####################
 Private Sub btnEGoto_Click()
@@ -948,11 +919,34 @@ Private Sub btnEnext_Click()
 End Sub
 
 Private Sub btnEprev_Click()
-    Dim result As Collection
     eCurrentPage = eCurrentPage - 1
     
     Set result = GetEnrollee(eCurrentPage, search)
     Call InitPagination("enrollee", result)
+End Sub
+
+Private Sub btnRefreshEn_Click()
+    eCurrentPage = 1
+    Set result = GetEnrollee()
+    Call InitPagination("enrollee", result)
+    
+    txtSearch.Text = ""
+End Sub
+
+Private Sub btnRefreshAdmin_Click()
+    aCurrentPage = 1
+    Set result = GetUser(True)
+    Call InitPagination("admin", result)
+    
+    Text1.Text = ""
+End Sub
+
+Private Sub btnRefreshReg_Click()
+    rCurrentPage = 1
+    Set result = GetUser(False)
+    Call InitPagination("registrar", result)
+    
+    Text2.Text = ""
 End Sub
 
 Private Sub btnSearch_Click()
@@ -976,6 +970,45 @@ End Sub
 
 Private Sub btnOpnStudForm_Click()
     StudentForm.Show
+End Sub
+
+Private Sub btnChangeUsername_Click()
+    
+    If CurrentUser.password = txtAuth1.Text Then
+        CurrentUser.username = txtNewUsername.Text
+        
+        Call UpdateUser(CurrentUser.id, CurrentUser)
+        
+        lblUsername.Caption = CurrentUser.username
+        lblAccountUsername.Caption = lblUsername.Caption
+        MsgBox "Successfully updated your username.", , "Success"
+        
+        txtNewUsername.Text = ""
+        txtAuth1.Text = ""
+    Else
+        MsgBox "Current password field input does not match the current user's password", vbExclamation, "Error"
+    End If
+End Sub
+
+Private Sub btnChangePassword_Click()
+    If CurrentUser.password = txtAuth2.Text Then
+        If txtNewPassword.Text = txtConfirm.Text Then
+            CurrentUser.password = txtNewPassword.Text
+            
+            Call UpdateUser(CurrentUser.id, CurrentUser)
+            
+            MsgBox "Successfully updated your password.", , "Success"
+            
+            txtNewPassword.Text = ""
+            txtAuth2.Text = ""
+            txtConfirm.Text = ""
+        Else
+            MsgBox "Passwords does not match.", vbExclamation, "Error"
+            Exit Sub
+        End If
+    Else
+        MsgBox "Current password field input does not match the current user's password", vbExclamation, "Error"
+    End If
 End Sub
 
 Private Sub LogoutBtn_Click()
@@ -1045,13 +1078,13 @@ Public Sub InitPagination(whatToPaginate As String, items As Collection)
                 .SubItems(10) = En.Birthdate
                 .SubItems(11) = En.Birthplace
                 .SubItems(12) = En.Mt
-                .SubItems(13) = En.address
+                .SubItems(13) = En.Address
                 .SubItems(14) = En.Submission
-                .SubItems(15) = En.fatherName
+                .SubItems(15) = En.Fathername
                 .SubItems(16) = En.Fnum
-                .SubItems(17) = En.motherName
+                .SubItems(17) = En.MotherName
                 .SubItems(18) = En.Mnum
-                .SubItems(19) = En.guardianName
+                .SubItems(19) = En.GuardianName
                 .SubItems(20) = En.Gnum
             End With
         Next
@@ -1243,13 +1276,13 @@ Private Sub EnrolleeLV_DblClick()
         .Birthdate = EnrolleeLV.SelectedItem.SubItems(10)
         .Birthplace = EnrolleeLV.SelectedItem.SubItems(11)
         .Mt = EnrolleeLV.SelectedItem.SubItems(12)
-        .address = EnrolleeLV.SelectedItem.SubItems(13)
+        .Address = EnrolleeLV.SelectedItem.SubItems(13)
         .Submission = EnrolleeLV.SelectedItem.SubItems(14)
-        .fatherName = EnrolleeLV.SelectedItem.SubItems(15)
+        .Fathername = EnrolleeLV.SelectedItem.SubItems(15)
         .Fnum = EnrolleeLV.SelectedItem.SubItems(16)
-        .motherName = EnrolleeLV.SelectedItem.SubItems(17)
+        .MotherName = EnrolleeLV.SelectedItem.SubItems(17)
         .Mnum = EnrolleeLV.SelectedItem.SubItems(18)
-        .guardianName = EnrolleeLV.SelectedItem.SubItems(19)
+        .GuardianName = EnrolleeLV.SelectedItem.SubItems(19)
         .Gnum = EnrolleeLV.SelectedItem.SubItems(20)
     End With
     Set selectedEnrollee = En
@@ -1283,3 +1316,4 @@ Private Sub UserSelect(item As IListItem)
 '    MsgBox (selectedUser.id & vbNewLine & selectedUser.username & _
 '    vbNewLine & selectedUser.password & vbNewLine & selectedUser.isAdmin)
 End Sub
+
