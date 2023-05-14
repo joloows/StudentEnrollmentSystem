@@ -151,183 +151,6 @@ Begin VB.Form StaffForm
          Width           =   1095
       End
    End
-   Begin VB.Frame EnrolleesFrame 
-      Caption         =   "EnrolleesFrame"
-      Height          =   7935
-      Left            =   2760
-      TabIndex        =   1
-      Top             =   0
-      Width           =   9375
-      Begin VB.CommandButton btnRefreshEn 
-         DisabledPicture =   "StaffForm.frx":0000
-         Height          =   375
-         Left            =   240
-         Picture         =   "StaffForm.frx":424A
-         Style           =   1  'Graphical
-         TabIndex        =   62
-         Top             =   1050
-         Width           =   375
-      End
-      Begin VB.CommandButton btnElast 
-         Caption         =   "Last >>"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   7080
-         TabIndex        =   43
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnEnext 
-         Caption         =   "Next >"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   5880
-         TabIndex        =   42
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnEGoto 
-         Caption         =   "Go to page"
-         Height          =   375
-         Left            =   3960
-         TabIndex        =   41
-         Top             =   7080
-         Width           =   1335
-      End
-      Begin VB.CommandButton btnEprev 
-         Caption         =   "< Previous"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   2400
-         TabIndex        =   40
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnEfirst 
-         Caption         =   "<< First"
-         Enabled         =   0   'False
-         Height          =   375
-         Left            =   1200
-         TabIndex        =   39
-         Top             =   7080
-         Width           =   975
-      End
-      Begin VB.CommandButton btnOpnStudForm 
-         Caption         =   "Open Student Form"
-         Height          =   525
-         Left            =   7920
-         TabIndex        =   12
-         Top             =   840
-         Width           =   1095
-      End
-      Begin MSComctlLib.ListView EnrolleeLV 
-         Height          =   5415
-         Left            =   240
-         TabIndex        =   11
-         Top             =   1560
-         Width           =   8895
-         _ExtentX        =   15690
-         _ExtentY        =   9551
-         View            =   3
-         LabelWrap       =   -1  'True
-         HideSelection   =   -1  'True
-         AllowReorder    =   -1  'True
-         _Version        =   393217
-         ForeColor       =   -2147483640
-         BackColor       =   -2147483643
-         BorderStyle     =   1
-         Appearance      =   1
-         NumItems        =   0
-      End
-      Begin VB.CommandButton btnSearch 
-         Caption         =   "Search"
-         Height          =   285
-         Left            =   4320
-         TabIndex        =   10
-         Top             =   1080
-         Width           =   975
-      End
-      Begin VB.TextBox txtSearch 
-         Height          =   285
-         Left            =   720
-         TabIndex        =   9
-         Top             =   1100
-         Width           =   3495
-      End
-      Begin VB.Label txtEPages 
-         AutoSize        =   -1  'True
-         Caption         =   "<<cur p.> of <total p.>>"
-         Height          =   195
-         Left            =   4200
-         TabIndex        =   38
-         Top             =   7560
-         Width           =   1650
-      End
-      Begin VB.Label Label4 
-         AutoSize        =   -1  'True
-         Caption         =   "Page:"
-         Height          =   195
-         Left            =   3600
-         TabIndex        =   37
-         Top             =   7560
-         Width           =   420
-      End
-      Begin VB.Label txtEIndex 
-         AutoSize        =   -1  'True
-         Caption         =   "<record>"
-         Height          =   195
-         Left            =   8160
-         TabIndex        =   19
-         Top             =   7560
-         Width           =   630
-      End
-      Begin VB.Label Label18 
-         AutoSize        =   -1  'True
-         Caption         =   "Showing:"
-         Height          =   195
-         Left            =   7320
-         TabIndex        =   18
-         Top             =   7560
-         Width           =   660
-      End
-      Begin VB.Label txtEResult 
-         AutoSize        =   -1  'True
-         Caption         =   "<total>"
-         Height          =   195
-         Left            =   1200
-         TabIndex        =   17
-         Top             =   7560
-         Width           =   480
-      End
-      Begin VB.Label Label7 
-         AutoSize        =   -1  'True
-         Caption         =   "Results:"
-         Height          =   195
-         Left            =   480
-         TabIndex        =   16
-         Top             =   7560
-         Width           =   570
-      End
-      Begin VB.Label Label5 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         Caption         =   "Manage Enrollees"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   13.5
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   360
-         Left            =   3360
-         TabIndex        =   13
-         Top             =   360
-         Width           =   2580
-      End
-   End
    Begin VB.Frame AccountFrame 
       Caption         =   "AccountFrame"
       Height          =   7935
@@ -520,10 +343,10 @@ Begin VB.Form StaffForm
       Top             =   0
       Width           =   9375
       Begin VB.CommandButton btnRefreshReg 
-         DisabledPicture =   "StaffForm.frx":46D4
+         DisabledPicture =   "StaffForm.frx":0000
          Height          =   375
          Left            =   240
-         Picture         =   "StaffForm.frx":891E
+         Picture         =   "StaffForm.frx":424A
          Style           =   1  'Graphical
          TabIndex        =   80
          Top             =   1050
@@ -698,10 +521,10 @@ Begin VB.Form StaffForm
       Top             =   0
       Width           =   9375
       Begin VB.CommandButton btnRefreshAdmin 
-         DisabledPicture =   "StaffForm.frx":8DA8
+         DisabledPicture =   "StaffForm.frx":46D4
          Height          =   375
          Left            =   240
-         Picture         =   "StaffForm.frx":CFF2
+         Picture         =   "StaffForm.frx":891E
          Style           =   1  'Graphical
          TabIndex        =   81
          Top             =   1050
@@ -868,6 +691,183 @@ Begin VB.Form StaffForm
          Width           =   1290
       End
    End
+   Begin VB.Frame EnrolleesFrame 
+      Caption         =   "EnrolleesFrame"
+      Height          =   7935
+      Left            =   2760
+      TabIndex        =   1
+      Top             =   0
+      Width           =   9375
+      Begin VB.CommandButton btnRefreshEn 
+         DisabledPicture =   "StaffForm.frx":8DA8
+         Height          =   375
+         Left            =   240
+         Picture         =   "StaffForm.frx":CFF2
+         Style           =   1  'Graphical
+         TabIndex        =   62
+         Top             =   1050
+         Width           =   375
+      End
+      Begin VB.CommandButton btnElast 
+         Caption         =   "Last >>"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   7080
+         TabIndex        =   43
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnEnext 
+         Caption         =   "Next >"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   5880
+         TabIndex        =   42
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnEGoto 
+         Caption         =   "Go to page"
+         Height          =   375
+         Left            =   3960
+         TabIndex        =   41
+         Top             =   7080
+         Width           =   1335
+      End
+      Begin VB.CommandButton btnEprev 
+         Caption         =   "< Previous"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   2400
+         TabIndex        =   40
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnEfirst 
+         Caption         =   "<< First"
+         Enabled         =   0   'False
+         Height          =   375
+         Left            =   1200
+         TabIndex        =   39
+         Top             =   7080
+         Width           =   975
+      End
+      Begin VB.CommandButton btnOpnStudForm 
+         Caption         =   "Open Student Form"
+         Height          =   525
+         Left            =   7920
+         TabIndex        =   12
+         Top             =   840
+         Width           =   1095
+      End
+      Begin MSComctlLib.ListView EnrolleeLV 
+         Height          =   5415
+         Left            =   240
+         TabIndex        =   11
+         Top             =   1560
+         Width           =   8895
+         _ExtentX        =   15690
+         _ExtentY        =   9551
+         View            =   3
+         LabelWrap       =   -1  'True
+         HideSelection   =   -1  'True
+         AllowReorder    =   -1  'True
+         _Version        =   393217
+         ForeColor       =   -2147483640
+         BackColor       =   -2147483643
+         BorderStyle     =   1
+         Appearance      =   1
+         NumItems        =   0
+      End
+      Begin VB.CommandButton btnSearch 
+         Caption         =   "Search"
+         Height          =   285
+         Left            =   4320
+         TabIndex        =   10
+         Top             =   1080
+         Width           =   975
+      End
+      Begin VB.TextBox txtSearch 
+         Height          =   285
+         Left            =   720
+         TabIndex        =   9
+         Top             =   1100
+         Width           =   3495
+      End
+      Begin VB.Label txtEPages 
+         AutoSize        =   -1  'True
+         Caption         =   "<<cur p.> of <total p.>>"
+         Height          =   195
+         Left            =   4200
+         TabIndex        =   38
+         Top             =   7560
+         Width           =   1650
+      End
+      Begin VB.Label Label4 
+         AutoSize        =   -1  'True
+         Caption         =   "Page:"
+         Height          =   195
+         Left            =   3600
+         TabIndex        =   37
+         Top             =   7560
+         Width           =   420
+      End
+      Begin VB.Label txtEIndex 
+         AutoSize        =   -1  'True
+         Caption         =   "<record>"
+         Height          =   195
+         Left            =   8160
+         TabIndex        =   19
+         Top             =   7560
+         Width           =   630
+      End
+      Begin VB.Label Label18 
+         AutoSize        =   -1  'True
+         Caption         =   "Showing:"
+         Height          =   195
+         Left            =   7320
+         TabIndex        =   18
+         Top             =   7560
+         Width           =   660
+      End
+      Begin VB.Label txtEResult 
+         AutoSize        =   -1  'True
+         Caption         =   "<total>"
+         Height          =   195
+         Left            =   1200
+         TabIndex        =   17
+         Top             =   7560
+         Width           =   480
+      End
+      Begin VB.Label Label7 
+         AutoSize        =   -1  'True
+         Caption         =   "Results:"
+         Height          =   195
+         Left            =   480
+         TabIndex        =   16
+         Top             =   7560
+         Width           =   570
+      End
+      Begin VB.Label Label5 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         Caption         =   "Manage Enrollees"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   13.5
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   360
+         Left            =   3360
+         TabIndex        =   13
+         Top             =   360
+         Width           =   2580
+      End
+   End
 End
 Attribute VB_Name = "StaffForm"
 Attribute VB_GlobalNameSpace = False
@@ -878,7 +878,7 @@ Private result As Collection
 Public search As String
 
 Public selectedEnrollee As Enrollee
-Public selectedUser As User
+Public selectedUser As user
 
 Public eCurrentPage As Integer
 Public eTotalPage As Integer
@@ -923,6 +923,64 @@ Private Sub btnEprev_Click()
     
     Set result = GetEnrollee(eCurrentPage, search)
     Call InitPagination("enrollee", result)
+End Sub
+
+' #################### ADMIN BUTTONS ####################
+Private Sub btnAfirst_Click()
+    aCurrentPage = 1
+    
+    Set result = GetUser(True, aCurrentPage, search)
+    Call InitPagination("admin", result)
+End Sub
+
+Private Sub btnAlast_Click()
+    aCurrentPage = aTotalPage
+    
+    Set result = GetUser(True, aCurrentPage, search)
+    Call InitPagination("admin", result)
+End Sub
+
+Private Sub btnAnext_Click()
+    aCurrentPage = aCurrentPage + 1
+    
+    Set result = GetUser(True, aCurrentPage, search)
+    Call InitPagination("admin", result)
+End Sub
+
+Private Sub btnAprev_Click()
+    aCurrentPage = aCurrentPage - 1
+    
+    Set result = GetUser(True, aCurrentPage, search)
+    Call InitPagination("admin", result)
+End Sub
+
+' #################### REGISTRAR BUTTONS ####################
+Private Sub btnRfirst_Click()
+    rCurrentPage = 1
+    
+    Set result = GetUser(False, rCurrentPage, search)
+    Call InitPagination("registrar", result)
+End Sub
+
+Private Sub btnRlast_Click()
+    rCurrentPage = rTotalPage
+    
+    Set result = GetUser(False, rCurrentPage, search)
+    Call InitPagination("registrar", result)
+End Sub
+
+Private Sub btnRnext_Click()
+    rCurrentPage = rCurrentPage + 1
+    
+    Set result = GetUser(False, rCurrentPage, search)
+    Call InitPagination("registrar", result)
+End Sub
+
+Private Sub btnRprev_Click()
+    rCurrentPage = rCurrentPage - 1
+    
+    Set result = GetUser(False, rCurrentPage, search)
+    Call InitPagination("registrar", result)
 End Sub
 
 Private Sub btnRefreshEn_Click()
@@ -981,7 +1039,6 @@ Private Sub btnChangeUsername_Click()
         
         lblUsername.Caption = CurrentUser.username
         lblAccountUsername.Caption = lblUsername.Caption
-        MsgBox "Successfully updated your username.", , "Success"
         
         txtNewUsername.Text = ""
         txtAuth1.Text = ""
@@ -991,13 +1048,14 @@ Private Sub btnChangeUsername_Click()
 End Sub
 
 Private Sub btnChangePassword_Click()
+    If Len(txtNewPassword.Text) < 8 Then
+        GoTo PasswordInvalidError
+    End If
     If CurrentUser.password = txtAuth2.Text Then
         If txtNewPassword.Text = txtConfirm.Text Then
             CurrentUser.password = txtNewPassword.Text
             
-            Call UpdateUser(CurrentUser.id, CurrentUser)
-            
-            MsgBox "Successfully updated your password.", , "Success"
+            Call UpdateCurrentUser(CurrentUser.id, CurrentUser)
             
             txtNewPassword.Text = ""
             txtAuth2.Text = ""
@@ -1009,6 +1067,9 @@ Private Sub btnChangePassword_Click()
     Else
         MsgBox "Current password field input does not match the current user's password", vbExclamation, "Error"
     End If
+    Exit Sub
+PasswordInvalidError:
+    MsgBox "Password should be at least 8 characters.", vbExclamation, "Invalid password"
 End Sub
 
 Private Sub LogoutBtn_Click()
@@ -1072,20 +1133,23 @@ Public Sub InitPagination(whatToPaginate As String, items As Collection)
                 .SubItems(4) = En.Lname
                 .SubItems(5) = En.Fname
                 .SubItems(6) = En.Mname
-                .SubItems(7) = En.Tuition
-                .SubItems(8) = En.Sex
-                .SubItems(9) = En.Age
-                .SubItems(10) = En.Birthdate
-                .SubItems(11) = En.Birthplace
-                .SubItems(12) = En.Mt
-                .SubItems(13) = En.Address
-                .SubItems(14) = En.Submission
-                .SubItems(15) = En.Fathername
-                .SubItems(16) = En.Fnum
-                .SubItems(17) = En.MotherName
-                .SubItems(18) = En.Mnum
-                .SubItems(19) = En.GuardianName
-                .SubItems(20) = En.Gnum
+                .SubItems(7) = En.TotalFee
+                .SubItems(8) = En.payment
+                .SubItems(9) = IIf(En.WithUniform, "Y", "N")
+                .SubItems(10) = En.PaymentType
+                .SubItems(11) = En.Sex
+                .SubItems(12) = En.Age
+                .SubItems(13) = En.Birthdate
+                .SubItems(14) = En.Birthplace
+                .SubItems(15) = En.Mt
+                .SubItems(16) = En.Address
+                .SubItems(17) = En.Submission
+                .SubItems(18) = En.Fathername
+                .SubItems(19) = En.Fnum
+                .SubItems(20) = En.MotherName
+                .SubItems(21) = En.Mnum
+                .SubItems(22) = En.GuardianName
+                .SubItems(23) = En.Gnum
             End With
         Next
         
@@ -1097,7 +1161,7 @@ Public Sub InitPagination(whatToPaginate As String, items As Collection)
         Call ButtonPaginationHelper(aCurrentPage, aTotalPage, btnAfirst, _
         btnAprev, btnAnext, btnAlast)
         
-        Call UserPaginationHelper(AdminLV, items)
+        Call UserPaginationHelper(AdminLV, items, "admin")
         
         Call PaginationInfo("admin", items, AdminLV, txtAResult, _
         txtAIndex, txtAPages)
@@ -1106,7 +1170,7 @@ Public Sub InitPagination(whatToPaginate As String, items As Collection)
         Call ButtonPaginationHelper(rCurrentPage, rTotalPage, btnRfirst, _
         btnRprev, btnRnext, btnRlast)
         
-        Call UserPaginationHelper(RegistrarLV, items)
+        Call UserPaginationHelper(RegistrarLV, items, "registrar")
         
         Call PaginationInfo("registrar", items, RegistrarLV, txtRResult, _
         txtRIndex, txtRPages)
@@ -1115,17 +1179,30 @@ Public Sub InitPagination(whatToPaginate As String, items As Collection)
 End Sub
 
 ' Setups the AdminLV and RegistrarLV for pagination. ignore
-Sub UserPaginationHelper(LV As ListView, items As Collection)
+Private Sub UserPaginationHelper(LV As ListView, items As Collection, userType As String)
     LV.ListItems.Clear
-    For Each u In items("users")
-        Set Li = LV.ListItems.Add(, , u.id)
-        With Li
-            .SubItems(1) = u.username
-            .SubItems(2) = u.password
-            .SubItems(3) = u.isAdmin
-            .SubItems(4) = u.dateCreated
-        End With
-    Next
+    If userType = "admin" Then
+        For Each u In items("users")
+            Set Li = LV.ListItems.Add(, , u.id)
+            With Li
+                .SubItems(1) = u.username
+                .SubItems(2) = u.isAdmin
+                .SubItems(3) = u.dateCreated
+            End With
+        Next
+    
+    ElseIf userType = "registrar" Then
+        For Each u In items("users")
+            Set Li = LV.ListItems.Add(, , u.id)
+            With Li
+                .SubItems(1) = u.username
+                .SubItems(2) = u.password
+                .SubItems(3) = u.isAdmin
+                .SubItems(4) = u.dateCreated
+            End With
+        Next
+    End If
+    
 End Sub
 
 ' Sets up the (first, prev, next, last) buttons on the pagination
@@ -1214,7 +1291,10 @@ Private Sub Form_Load()
         .Add , , "Last Name", 1200, lvwColumnCenter
         .Add , , "First Name", 1200, lvwColumnCenter
         .Add , , "Middle Name", 1200, lvwColumnCenter
-        .Add , , "Tuition", 1200
+        .Add , , "Total Fees", 1200, lvwColumnCenter
+        .Add , , "Payment", 1200, lvwColumnCenter
+        .Add , , "With Uniform", 1200, lvwColumnCenter
+        .Add , , "Payment Type", 1400, lvwColumnCenter
         .Add , , "Sex", 700
         .Add , , "Age", 700, lvwColumnCenter
         .Add , , "Birthdate", 1200, lvwColumnCenter
@@ -1230,8 +1310,8 @@ Private Sub Form_Load()
         .Add , , "Guardian No.", 1200
     End With
     
-    Call SetupHelper(AdminLV)
-    Call SetupHelper(RegistrarLV)
+    Call SetupHelper(AdminLV, "admin")
+    Call SetupHelper(RegistrarLV, "registrar")
     
     ' Set CurrentPage for all paginations to 1
     eCurrentPage = 1
@@ -1250,14 +1330,23 @@ Private Sub Form_Load()
     Call InitPagination("registrar", result)
 End Sub
 
-Sub SetupHelper(LV As ListView)
-    With LV.ColumnHeaders
-        .Add , , "Id", 500
-        .Add , , "username", 1400, lvwColumnCenter
-        .Add , , "password", 1350, lvwColumnCenter
-        .Add , , "IsAdmin", 1350, lvwColumnCenter
-        .Add , , "Date Created", 1700, lvwColumnCenter
-    End With
+Sub SetupHelper(LV As ListView, userType As String)
+    If userType = "admin" Then
+        With LV.ColumnHeaders
+            .Add , , "Id", 500
+            .Add , , "username", 1950, lvwColumnCenter
+            .Add , , "IsAdmin", 1850, lvwColumnCenter
+            .Add , , "Date Created", 2000, lvwColumnCenter
+        End With
+    ElseIf userType = "registrar" Then
+        With LV.ColumnHeaders
+            .Add , , "Id", 500
+            .Add , , "username", 1400, lvwColumnCenter
+            .Add , , "password", 1350, lvwColumnCenter
+            .Add , , "IsAdmin", 1350, lvwColumnCenter
+            .Add , , "Date Created", 1700, lvwColumnCenter
+        End With
+    End If
 End Sub
 
 Private Sub EnrolleeLV_DblClick()
@@ -1270,20 +1359,23 @@ Private Sub EnrolleeLV_DblClick()
         .Lname = EnrolleeLV.SelectedItem.SubItems(4)
         .Fname = EnrolleeLV.SelectedItem.SubItems(5)
         .Mname = EnrolleeLV.SelectedItem.SubItems(6)
-        .Tuition = CInt(EnrolleeLV.SelectedItem.SubItems(7))
-        .Sex = EnrolleeLV.SelectedItem.SubItems(8)
-        .Age = EnrolleeLV.SelectedItem.SubItems(9)
-        .Birthdate = EnrolleeLV.SelectedItem.SubItems(10)
-        .Birthplace = EnrolleeLV.SelectedItem.SubItems(11)
-        .Mt = EnrolleeLV.SelectedItem.SubItems(12)
-        .Address = EnrolleeLV.SelectedItem.SubItems(13)
-        .Submission = EnrolleeLV.SelectedItem.SubItems(14)
-        .Fathername = EnrolleeLV.SelectedItem.SubItems(15)
-        .Fnum = EnrolleeLV.SelectedItem.SubItems(16)
-        .MotherName = EnrolleeLV.SelectedItem.SubItems(17)
-        .Mnum = EnrolleeLV.SelectedItem.SubItems(18)
-        .GuardianName = EnrolleeLV.SelectedItem.SubItems(19)
-        .Gnum = EnrolleeLV.SelectedItem.SubItems(20)
+        .TotalFee = CCur(EnrolleeLV.SelectedItem.SubItems(7))
+        .payment = CCur(EnrolleeLV.SelectedItem.SubItems(8))
+        .WithUniform = IIf(EnrolleeLV.SelectedItem.SubItems(9) = "Y", True, False)
+        .PaymentType = EnrolleeLV.SelectedItem.SubItems(10)
+        .Sex = EnrolleeLV.SelectedItem.SubItems(11)
+        .Age = EnrolleeLV.SelectedItem.SubItems(12)
+        .Birthdate = EnrolleeLV.SelectedItem.SubItems(13)
+        .Birthplace = EnrolleeLV.SelectedItem.SubItems(14)
+        .Mt = EnrolleeLV.SelectedItem.SubItems(15)
+        .Address = EnrolleeLV.SelectedItem.SubItems(16)
+        .Submission = EnrolleeLV.SelectedItem.SubItems(17)
+        .Fathername = EnrolleeLV.SelectedItem.SubItems(18)
+        .Fnum = EnrolleeLV.SelectedItem.SubItems(19)
+        .MotherName = EnrolleeLV.SelectedItem.SubItems(20)
+        .Mnum = EnrolleeLV.SelectedItem.SubItems(21)
+        .GuardianName = EnrolleeLV.SelectedItem.SubItems(22)
+        .Gnum = EnrolleeLV.SelectedItem.SubItems(23)
     End With
     Set selectedEnrollee = En
     
@@ -1292,28 +1384,32 @@ End Sub
 
 Private Sub AdminLV_DblClick()
     Debug.Print ("AdminLV")
-    Call UserSelect(AdminLV.SelectedItem)
+    Call UserSelect(AdminLV.SelectedItem, "admin")
 End Sub
 
 Private Sub RegistrarLV_DblClick()
     Debug.Print ("RegistrarLV")
-    Call UserSelect(RegistrarLV.SelectedItem)
+    Call UserSelect(RegistrarLV.SelectedItem, "registrar")
 End Sub
 
-Private Sub UserSelect(item As IListItem)
-    Dim u As New User
+Private Sub UserSelect(item As IListItem, userType As String)
+    Dim u As New user
     
-    With u
-        .id = item
-        .username = item.SubItems(1)
-        .password = item.SubItems(2)
-        .isAdmin = item.SubItems(3)
-    End With
+    If userType = "admin" Then
+        MsgBox "You have no permission to manage admin accounts.", vbExclamation, "No permission"
+        Exit Sub
+    ElseIf userType = "registrar" Then
+        With u
+            .id = item
+            .username = item.SubItems(1)
+            .password = item.SubItems(2)
+            .isAdmin = item.SubItems(3)
+        End With
+    End If
     Set selectedUser = u
     
     UserSelectForm.Show
-    
-'    MsgBox (selectedUser.id & vbNewLine & selectedUser.username & _
-'    vbNewLine & selectedUser.password & vbNewLine & selectedUser.isAdmin)
 End Sub
+
+
 

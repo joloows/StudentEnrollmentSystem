@@ -121,6 +121,9 @@ Private Sub btnCreate_Click()
     password1 = txtPassword1.Text
     password2 = txtPassword2.Text
     
+    If Len(password2) < 8 Then
+        GoTo PasswordInvalidError
+    End If
     If chkboxAdminPerm.Value = 1 Then ' If checked
         adminPerm = True
     Else
@@ -134,8 +137,10 @@ Private Sub btnCreate_Click()
         
         Set result = GetUser(adminPerm, page)
         Call StaffForm.InitPagination(IIf(adminPerm, "admin", "registrar"), result)
-        Unload Me
     Else
         MsgBox "Passwords does not match. Please try again.", vbExclamation, "Error"
     End If
+    Exit Sub
+PasswordInvalidError:
+    MsgBox "Password should be at least 8 characters.", vbExclamation, "Invalid password"
 End Sub

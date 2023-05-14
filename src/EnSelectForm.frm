@@ -2,12 +2,27 @@ VERSION 5.00
 Begin VB.Form EnSelectForm 
    Caption         =   "Manage Enrollee"
    ClientHeight    =   4200
-   ClientLeft      =   9210
-   ClientTop       =   4950
-   ClientWidth     =   4575
+   ClientLeft      =   7860
+   ClientTop       =   4905
+   ClientWidth     =   8505
    LinkTopic       =   "Form1"
    ScaleHeight     =   4200
-   ScaleWidth      =   4575
+   ScaleWidth      =   8505
+   Begin VB.CommandButton btnUpdateFee 
+      Caption         =   "Update Fees"
+      Height          =   375
+      Left            =   5520
+      TabIndex        =   17
+      Top             =   2880
+      Width           =   1095
+   End
+   Begin VB.TextBox txtAddPayment 
+      Height          =   285
+      Left            =   6480
+      TabIndex        =   16
+      Top             =   2160
+      Width           =   615
+   End
    Begin VB.CommandButton btnAssignSection 
       Caption         =   "Assign Section"
       Height          =   495
@@ -39,6 +54,48 @@ Begin VB.Form EnSelectForm
       TabIndex        =   6
       Top             =   3360
       Width           =   1215
+   End
+   Begin VB.Label Label7 
+      Caption         =   "Add payment: "
+      Height          =   375
+      Left            =   4680
+      TabIndex        =   15
+      Top             =   2160
+      Width           =   1095
+   End
+   Begin VB.Label lblEnFeeLeft 
+      Alignment       =   1  'Right Justify
+      Caption         =   "Label6"
+      Height          =   255
+      Left            =   6120
+      TabIndex        =   14
+      Top             =   1560
+      Width           =   855
+   End
+   Begin VB.Label Label6 
+      Caption         =   "Fees Left: "
+      Height          =   195
+      Left            =   4680
+      TabIndex        =   13
+      Top             =   1560
+      Width           =   750
+   End
+   Begin VB.Label lblEnTotalFee 
+      Alignment       =   1  'Right Justify
+      Caption         =   "Label6"
+      Height          =   255
+      Left            =   6120
+      TabIndex        =   12
+      Top             =   1080
+      Width           =   855
+   End
+   Begin VB.Label Label5 
+      Caption         =   "Total Fees:"
+      Height          =   195
+      Left            =   4680
+      TabIndex        =   11
+      Top             =   1080
+      Width           =   795
    End
    Begin VB.Label Label4 
       Alignment       =   2  'Center
@@ -112,8 +169,8 @@ Begin VB.Form EnSelectForm
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   435
-      Left            =   0
+      Height          =   495
+      Left            =   2040
       TabIndex        =   0
       Top             =   240
       Width           =   4575
@@ -148,18 +205,8 @@ Private Sub btnEnUpdate_Click()
     Dim Fathername() As String
     Dim MotherName() As String
     Dim GuardianName() As String
-    Dim mop As Integer
     
     StudentForm.Hide
-    
-    
-    If En.Tuition = 11550 Then
-        mop = 2
-    ElseIf En.Tuition = 11025 Then
-        mop = 1
-    Else
-        mop = 0
-    End If
     
     Address = Split(En.Address, ", ")
     x = Split(Address(UBound(Address)), " ")
@@ -168,17 +215,14 @@ Private Sub btnEnUpdate_Click()
     MotherName = Split(En.MotherName, " ")
     GuardianName = Split(En.GuardianName, " ")
     With StudentForm
-        .cbxMOP.ListIndex = mop
         .txtLname.Text = En.Lname
         .txtFname.Text = En.Fname
         .txtMname.Text = En.Mname
-        .txtGrade.Text = En.Grade
+        .cmbGrade.Text = En.Grade
         .optMale.Value = IIf(En.Sex = "Male", True, False)
         .optFemale.Value = IIf(En.Sex = "Female", True, False)
         .txtAge.Text = En.Age
-        .txtBm.Text = Month(En.Birthdate)
-        .txtBd.Text = Day(En.Birthdate)
-        .txtBy.Text = Year(En.Birthdate)
+        .dtBirthdate = En.Birthdate
         .txtBirth.Text = En.Birthplace
         .txtMt.Text = En.Mt
         .txtHno.Text = Address(0)
@@ -201,9 +245,10 @@ Private Sub btnEnUpdate_Click()
         .txtgNum.Text = En.Gnum
     End With
     
-
+    StudentForm.Width = 9960
     StudentForm.inputMode = 1
     StudentForm.Show vbModal
+    StudentForm.Width = 13995
     StudentForm.inputMode = 0
 End Sub
 
@@ -232,6 +277,45 @@ Private Sub btnAssignSection_Click()
     Call StaffForm.InitPagination("enrollee", result)
 End Sub
 
+Private Sub btnUpdateFee_Click()
+    On Err GoTo FeeErrorHandler
+    Dim payment As Currency
+    Dim response As Integer
+    
+    If lblEnFeeLeft.Caption = 0 Then
+        GoTo EnrolleeAlreadyPaid
+    End If
+    
+    payment = CCur(txtAddPayment.Text)
+    
+    If payment > CCur(lblEnFeeLeft) Then
+        payment = CCur(lblEnFeeLeft)
+    End If
+    
+    response = AddEnrolleeFeePayment(payment, En.id)
+    If response = 0 Then
+        MsgBox "Fee has been updated succesfully.", vbInformation, "Success"
+        If payment = CCur(lblEnFeeLeft) Then
+            lblEnFeeLeft.Caption = 0
+        Else
+            lblEnFeeLeft.Caption = CInt(lblEnFeeLeft.Caption) - payment
+        End If
+        txtAddPayment.Text = ""
+    Else
+        MsgBox "An Unexpected error has occured.", vbCritical, "Error"
+    End If
+    
+    Set result = GetEnrollee(StaffForm.eCurrentPage, StaffForm.search)
+    Call StaffForm.InitPagination("enrollee", result)
+    Exit Sub
+FeeErrorHandler:
+    MsgBox "Invalid Input. Please only use numbers (0-9) in the fields.", vbCritical, "Error"
+    txtAddPayment.Text = ""
+    Exit Sub
+EnrolleeAlreadyPaid:
+    MsgBox "Enrollee is already fully paid.", vbExclamation, "Fully paid"
+End Sub
+
 Private Sub Form_Load()
     Set En = StaffForm.selectedEnrollee
 
@@ -240,4 +324,8 @@ Private Sub Form_Load()
     lblSelected.Caption = En.Fname & " " & MI & ". " & En.Lname
     lblGrade.Caption = En.Grade
     lblSection.Caption = IIf(En.Section <> "", En.Section, "not assigned")
+    lblEnTotalFee.Caption = En.TotalFee
+    Debug.Print En.TotalFee & " - " & En.payment
+    lblEnFeeLeft.Caption = En.TotalFee - En.payment
 End Sub
+

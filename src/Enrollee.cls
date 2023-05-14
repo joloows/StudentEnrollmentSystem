@@ -19,7 +19,10 @@ Private mLname As String
 Private mFname As String
 Private mMname As String
 Private mSex As String
-Private mTuition As Integer
+Private mTotalFee As Currency
+Private mWithUniform As Boolean
+Private mPaymentType As String
+Private mPayment As Currency
 Private mAge As Integer
 Private mBirthdate As Date
 Private mBirthplace As String
@@ -69,8 +72,20 @@ Public Property Get Sex() As String
     Sex = mSex
 End Property
 
-Public Property Get Tuition() As Integer
-    Tuition = mTuition
+Public Property Get TotalFee() As Currency
+    TotalFee = mTotalFee
+End Property
+
+Public Property Get WithUniform() As Boolean
+    WithUniform = mWithUniform
+End Property
+
+Public Property Get PaymentType() As String
+    PaymentType = mPaymentType
+End Property
+
+Public Property Get payment() As Currency
+    payment = mPayment
 End Property
 
 Public Property Get Age() As Integer
@@ -157,8 +172,20 @@ Public Property Let Sex(Value As String)
     mSex = Value
 End Property
 
-Public Property Let Tuition(Value As Integer)
-    mTuition = Value
+Public Property Let TotalFee(Value As Currency)
+    mTotalFee = Value
+End Property
+
+Public Property Let WithUniform(Value As Boolean)
+    mWithUniform = Value
+End Property
+
+Public Property Let PaymentType(Value As String)
+    mPaymentType = Value
+End Property
+
+Public Property Let payment(Value As Currency)
+    mPayment = Value
 End Property
 
 Public Property Let Age(Value As Integer)

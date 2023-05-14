@@ -2,30 +2,6 @@ Attribute VB_Name = "DatabaseModule"
 Public db As Database
 Public rs As Recordset
 
-' Jolo po 'to :)
-' We use DAO to communicate with the database. When searching on google,
-' make sure the code you're reading uses 'DAO' instead of 'ADODB'.
-' i.e. search "VB6 how to delete a record from the database with DAO"
-' I recommend po na i-search nyo po muna bago po kayo magtanong sakin
-' kasi i-sesearch ko din po yan pag nagtanong po kayo sa akin kung paano
-' gawin si ganto -- ganyan sa VB6 haha
-
-' But if may gusto po kayo ipa-explain sakin sa code na gawa ko, feel free
-' po na magtanong sa akin. Also recommend ko po na buksan nyo sa ibang
-' text editor yung mga file, masakit sa mata pag sa VB6 kayo magrereview ng code.
-' (for example: if my vscode kayo, doon nyo sya buksan. Or kahit notepad++ lang)
-' If mag wriwrite po kayo ng code, sa VB6 po kayo gagawa.
-
-' Below po is yung mga functionality na kulang pa po natin.
-' TODO: DeleteUser() - Deletes a user from the database
-' TODO: UpdateUser() - Update user info from the database. Account section in StaffForm will also use this.
-' TODO: DeleteEnrollee() - Deletes an enrollee from the database
-' TODO: UpdateEnrollee() - Updates info of an enrollee from the database
-' TODO: tuition computation - Jolo na po gagawa nento.
-
-' InitDatabase() Initializes the database needed for the application.
-' Creates the database if the database does not exist
-' If the database exists, it just opens the database
 Public Sub InitDatabase()
 Attribute InitDatabase.VB_Description = "Initializes the database needed for the application. Creates the database if the database does not exist. If the database exists, it just opens the database"
     Dim dbPath As String
@@ -42,8 +18,8 @@ Attribute InitDatabase.VB_Description = "Initializes the database needed for the
         Dim EnrolleeTable, StaffTable As TableDef
         Dim EnrolleeIdField, GradeLevelField, SectionField As Field
         Dim LastNameField, FirstNameField, MiddleNameField, ExNameField As Field
-        Dim SexField, AddressField As Field
-        Dim IsEnrolledField, DateEnrolledField As Field
+        Dim SexField, AddressField, TotalFeeField, WithUniformField As Field
+        Dim PaymentTypeField, PaymentField, IsEnrolledField, DateEnrolledField As Field
         Dim FatherNameField, MotherNameField, GuardianNameField As Field
         Dim FatherNumField, MotherNumField, GuardianNumField As Field
         Dim StaffIdField, UsernameField, PasswordField, IsAdminField, DateCreatedField As Field
@@ -64,9 +40,12 @@ Attribute InitDatabase.VB_Description = "Initializes the database needed for the
             Set LastNameField = .CreateField("last_name", dbText)
             Set FirstNameField = .CreateField("first_name", dbText)
             Set MiddleNameField = .CreateField("middle_name", dbText)
-            Set TuitionField = .CreateField("tuition", dbCurrency)
             Set SexField = .CreateField("sex", dbText)
             Set AgeField = .CreateField("age", dbInteger)
+            Set TotalFeeField = .CreateField("total_fee", dbCurrency)
+            Set WithUniformField = .CreateField("with_uniform", dbBoolean)
+            Set PaymentTypeField = .CreateField("payment_type", dbText)
+            Set PaymentField = .CreateField("payment", dbCurrency)
             Set BirthdateField = .CreateField("birthdate", dbDate)
             Set BirthplaceField = .CreateField("birthplace", dbText)
             Set MtField = .CreateField("mother_tongue", dbText)
@@ -89,7 +68,10 @@ Attribute InitDatabase.VB_Description = "Initializes the database needed for the
             .Append LastNameField
             .Append FirstNameField
             .Append MiddleNameField
-            .Append TuitionField
+            .Append TotalFeeField
+            .Append WithUniformField
+            .Append PaymentTypeField
+            .Append PaymentField
             .Append SexField
             .Append AgeField
             .Append BirthdateField
@@ -158,7 +140,7 @@ Attribute InitDatabase.VB_Description = "Initializes the database needed for the
 End Sub
 
 Public Sub AddEnrollee(En As Enrollee)
-    
+    On Error GoTo ErrorHandler
     Set rs = db.OpenRecordset("enrollee")
     ' Populate recordset with the Enrollee object "En"
     ' Checkout Enrollee.cls
@@ -167,19 +149,22 @@ Public Sub AddEnrollee(En As Enrollee)
         !last_name = En.Lname
         !first_name = En.Fname
         !middle_name = En.Mname
-        !Tuition = En.Tuition
+        !total_fee = En.TotalFee
+        !with_uniform = En.WithUniform
+        !payment_type = En.PaymentType
+        !payment = En.payment
         !grade_level = En.Grade
         !Sex = En.Sex
         !Age = En.Age
         !Birthdate = En.Birthdate
         !Birthplace = En.Birthplace
         !mother_tongue = En.Mt
-        !address = En.address
-        !father_name = En.fatherName
+        !Address = En.Address
+        !father_name = En.Fathername
         !father_no = En.Fnum
-        !mother_name = En.motherName
+        !mother_name = En.MotherName
         !mother_no = En.Mnum
-        !guardian_name = En.guardianName
+        !guardian_name = En.GuardianName
         !guardian_no = En.Gnum
         !date_enrolled = En.Submission
         .Update
@@ -187,9 +172,14 @@ Public Sub AddEnrollee(En As Enrollee)
     ' Clean up
     rs.Close
     Set rs = Nothing
+    MsgBox "Submission recorded successfuly.", vbInformation, "Success"
+    Exit Sub
+ErrorHandler:
+    MsgBox "Please fill out all of the info.", vbExclamation, "Error"
 End Sub
 
 Public Sub CreateUser(username As String, password As String, adminPerm As Boolean)
+    On Error GoTo ErrorHandler
     ' Query user input to database
     Dim qdf As QueryDef
     Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE username=[_uname]")
@@ -209,12 +199,17 @@ Public Sub CreateUser(username As String, password As String, adminPerm As Boole
                 !date_created = Date
                 .Update
             End With
-            rs.Close
-            Set rs = Nothing
             MsgBox "Succesfully created user '" & username & "'.", vbInformation, "Success"
+            Unload CreateAccForm
     Else
         MsgBox "username already exists.", vbCritical, "Error"
     End If
+    rs.Close
+    Set rs = Nothing
+    Exit Sub
+ErrorHandler:
+    Debug.Print Err.Description
+    MsgBox "Please fill out all of the info.", vbExclamation, "Error"
 End Sub
 
 Public Function GetEnrollee(Optional page As Integer = 1, Optional search As String = "") As Collection
@@ -284,22 +279,25 @@ Public Function GetEnrollee(Optional page As Integer = 1, Optional search As Str
             .id = rs!enrollee_id
             .Enrolled = rs!is_enrolled
             .Grade = rs!grade_level
-            .section = IIf(IsNull(rs!section), "N/A", rs!section)
+            .Section = IIf(IsNull(rs!Section), "N/A", rs!Section)
             .Lname = rs!last_name
             .Fname = rs!first_name
             .Mname = rs!middle_name
-            .Tuition = rs!Tuition
+            .TotalFee = rs!total_fee
+            .WithUniform = rs!with_uniform
+            .PaymentType = rs!payment_type
+            .payment = rs!payment
             .Sex = rs!Sex
             .Age = rs!Age
             .Birthdate = rs!Birthdate
             .Birthplace = rs!Birthplace
             .Mt = rs!mother_tongue
-            .address = rs!address
-            .fatherName = rs!father_name
+            .Address = rs!Address
+            .Fathername = rs!father_name
             .Fnum = rs!father_no
-            .motherName = rs!mother_name
+            .MotherName = rs!mother_name
             .Mnum = rs!mother_no
-            .guardianName = rs!guardian_name
+            .GuardianName = rs!guardian_name
             .Gnum = rs!guardian_no
             .Submission = rs!date_enrolled
         End With
@@ -309,7 +307,10 @@ Public Function GetEnrollee(Optional page As Integer = 1, Optional search As Str
         rs.MoveNext
     Wend
     
-    pages = (total \ 23) + 1 ' ceil dividing to get total pages
+    pages = (total \ 23)
+    If pages Mod 2 = 1 Or pages = 0 Then
+        pages = pages + 1
+    End If
     
     ' Add all the needed by the pagination the the result Collection
     With result
@@ -330,7 +331,7 @@ End Function
 Public Function GetUser(isAdmin As Boolean, Optional page As Integer = 1, Optional search As String = "") As Collection
     Dim qdf As QueryDef
     Dim users As New Collection
-    Dim u As User
+    Dim u As user
     Dim result As New Collection
     
     Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE NOT username=[_currentuser] AND is_admin=[_isadmin]")
@@ -362,7 +363,7 @@ Public Function GetUser(isAdmin As Boolean, Optional page As Integer = 1, Option
     
     i = 1
     While Not rs.EOF And i <= 23
-        Set u = New User
+        Set u = New user
         With u
            u.id = rs!staff_id
            u.username = rs!username
@@ -376,7 +377,12 @@ Public Function GetUser(isAdmin As Boolean, Optional page As Integer = 1, Option
         rs.MoveNext
     Wend
     
-    pages = CInt(total / 23) + 1 ' ceil dividing to get total pages
+    temp = (total / 23)
+    pages = CInt(temp)
+    If temp - pages > 0 Or pages = 0 Then
+        pages = pages + 1
+    End If
+    
     With result
         .Add users, "users"
         .Add total, "recordCount"
@@ -391,13 +397,50 @@ Public Function GetUser(isAdmin As Boolean, Optional page As Integer = 1, Option
     Set GetUser = result
 End Function
 
-Public Function UpdateUser(id As Integer, NewUser As User)
+Public Function UpdateUser(id As Integer, NewUser As user)
+    On Error GoTo ErrorHandler
     Dim qdf As QueryDef
+    
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE username=[_uname]")
+    qdf.Parameters("_uname") = NewUser.username
+
+    Set rs = qdf.OpenRecordset
+
+    If rs.BOF And rs.EOF Then ' If account not exist in database
+        rs.Close
+        Set rs = Nothing
+        Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE staff_id=[_id]")
+        qdf.Parameters("_id") = id
+        Set rs = qdf.OpenRecordset
+        With rs
+            .Edit
+            !username = NewUser.username
+            !password = NewUser.password
+            !is_admin = NewUser.isAdmin
+            .Update
+        End With
+        rs.Close
+        Set rs = Nothing
+        MsgBox "User successfully updated.", vbInformation, "Success"
+        Unload UserSelectForm
+    Else
+        MsgBox "username already exists.", vbCritical, "Error"
+    End If
+    
+    UserSelectForm.PasswordConfirmed = False
+    Exit Function
+ErrorHandler:
+    Debug.Print Err.Description
+    MsgBox "Please fill out all of the info.", vbExclamation, "Error"
+    PasswordConfirmed = False
+End Function
+
+Public Function UpdateCurrentUser(id As Integer, NewUser As user)
+    Dim qdf As QueryDef
+    
     Set qdf = db.CreateQueryDef("", "SELECT * FROM staff WHERE staff_id=[_id]")
     qdf.Parameters("_id") = id
-    
     Set rs = qdf.OpenRecordset
-    
     With rs
         .Edit
         !username = NewUser.username
@@ -405,9 +448,9 @@ Public Function UpdateUser(id As Integer, NewUser As User)
         !is_admin = NewUser.isAdmin
         .Update
     End With
-    
     rs.Close
     Set rs = Nothing
+    MsgBox "User successfully updated.", vbInformation, "Success"
 End Function
 
 Public Function DeleteUser(id As Integer)
@@ -421,11 +464,11 @@ Public Function DeleteUser(id As Integer)
     
     rs.Close
     Set rs = Nothing
+    MsgBox "User successfully deleted.", vbInformation, "Success"
 End Function
 
-' FIXME: sex not updating
-' TODO: allow tuition update
 Public Function UpdateEnrollee(id As Integer, NewEnrollee As Enrollee)
+    On Error GoTo ErrorHandler
     Dim qdf As QueryDef
     Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
     qdf.Parameters("_id") = id
@@ -438,24 +481,27 @@ Public Function UpdateEnrollee(id As Integer, NewEnrollee As Enrollee)
         !first_name = NewEnrollee.Fname
         !middle_name = NewEnrollee.Mname
         !grade_level = NewEnrollee.Grade
-        !Tuition = NewEnrollee.Tuition
         !Sex = NewEnrollee.Sex
         !Age = NewEnrollee.Age
         !Birthdate = NewEnrollee.Birthdate
         !Birthplace = NewEnrollee.Birthplace
         !mother_tongue = NewEnrollee.Mt
-        !address = NewEnrollee.address
-        !father_name = NewEnrollee.fatherName
+        !Address = NewEnrollee.Address
+        !father_name = NewEnrollee.Fathername
         !father_no = NewEnrollee.Fnum
-        !mother_name = NewEnrollee.motherName
+        !mother_name = NewEnrollee.MotherName
         !mother_no = NewEnrollee.Mnum
-        !guardian_name = NewEnrollee.guardianName
+        !guardian_name = NewEnrollee.GuardianName
         !guardian_no = NewEnrollee.Gnum
         .Update
     End With
     
     rs.Close
     Set rs = Nothing
+    MsgBox "Submission recorded successfuly.", vbInformation, "Success"
+    Exit Function
+ErrorHandler:
+    MsgBox "Please fill out all of the info.", vbExclamation, "Error"
 End Function
 
 Public Function DeleteEnrollee(id As Integer)
@@ -490,23 +536,53 @@ Public Function UpdateEnrolleeStatus(status As Boolean, id As Integer)
         Set rs = Nothing
 End Function
 
-Public Function AssignEnrolleeSection(section As String, id As Integer)
-        Dim En As Enrollee
+Public Function AssignEnrolleeSection(Section As String, id As Integer)
+    Dim En As Enrollee
     Dim qdf As QueryDef
     
-        Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
-        qdf.Parameters("_id") = id
-        
-        Set rs = qdf.OpenRecordset
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
+    qdf.Parameters("_id") = id
     
-        With rs
-            .Edit
-            !section = section
-            .Update
-        End With
-        
-        rs.Close
-        Set rs = Nothing
-        
-        AssignEnrolleeSection = 0
+    Set rs = qdf.OpenRecordset
+
+    With rs
+        .Edit
+        !Section = Section
+        .Update
+    End With
+    
+    rs.Close
+    Set rs = Nothing
+    
+    AssignEnrolleeSection = 0
+End Function
+
+Public Function AddEnrolleeFeePayment(payment As Currency, id As Integer) As Integer
+    On Err GoTo ErrorHandler
+    Dim En As Enrollee
+    Dim qdf As QueryDef
+    Dim curFee As Currency
+    Dim curPayment As Currency
+    
+    Set qdf = db.CreateQueryDef("", "SELECT * FROM enrollee WHERE enrollee_id=[_id]")
+    qdf.Parameters("_id") = id
+    
+    Set rs = qdf.OpenRecordset
+    
+    curPayment = rs!payment
+    curFee = rs!total_fee - curPayment
+    
+    With rs
+        .Edit
+        !payment = !payment + payment
+        .Update
+    End With
+    
+    rs.Close
+    Set rs = Nothing
+    
+    AddEnrolleeFeePayment = 0
+    Exit Function
+ErrorHandler:
+    AddEnrolleFeePayment = -1
 End Function
